@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Harmonielehre-Trainer</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="backdrop" class="backdrop" aria-hidden="true"></div>
+
+  <div id="app" class="app">
+    <aside id="sidebar" class="sidebar" aria-label="Navigation">
+      <div class="sb-head">
+        <div class="sb-brand">
+          <span class="sb-logo">🎹</span>
+          <span id="sb-title">Harmonielehre</span>
+        </div>
+        <button id="sb-close" class="icon-btn mobile-only" aria-label="Menü schließen">✕</button>
+      </div>
+      <div class="sb-progress" id="sb-progress"></div>
+      <div id="sb-content" class="sb-content"></div>
+    </aside>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="sb-toggle" class="icon-btn" title="Seitenleiste ein/aus" aria-label="Menü">☰</button>
+          <h1 id="app-title" class="app-title">Harmonielehre-Trainer</h1>
+        </div>
+        <div class="topbar-controls">
+          <label class="inline-ctrl" title="Globale Tonart">
+            <span class="ctrl-lbl" data-i18n="key">Tonart</span>
+            <select id="global-key"></select>
+          </label>
+          <button id="notation-btn" class="pill-btn" title="Notenschreibweise: International (B/B♭) oder Deutsch (H/B)">B / B♭</button>
+          <button id="theme-btn" class="icon-btn" title="Hell / Dunkel umschalten" aria-label="Theme">🌙</button>
+          <div class="lang-switch" role="group" aria-label="Sprache">
+            <button data-lang="de" class="sel">DE</button>
+            <button data-lang="en">EN</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- TAB: LEKTIONEN -->
+        <section id="tab-l" class="tab-panel">
+          <article id="lesson-card" class="card lesson-card"></article>
+        </section>
+
+        <!-- TAB: ÜBUNGSTOOL -->
+        <section id="tab-p" class="tab-panel hide">
+          <div class="card">
+            <div class="card-head">
+              <h2 data-i18n="practice_title">🎛 Übungstool</h2>
+              <div class="beat-bar" id="beat-bar" aria-label="Taktanzeige"></div>
+            </div>
+
+            <div class="form-grid">
+              <label>
+                <span data-i18n="progression">Progression</span>
+                <select id="p-preset"></select>
+              </label>
+              <label>
+                <span data-i18n="mode">Tongeschlecht</span>
+                <select id="p-mode">
+                  <option value="maj" data-i18n="major">Dur</option>
+                  <option value="min" data-i18n="minor">Moll</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="start_key">Starttonart</span>
+                <select id="p-key"></select>
+              </label>
+              <label>
+                <span data-i18n="voicing">Voicing / Umkehrung</span>
+                <select id="p-inv"></select>
+              </label>
+            </div>
+
+            <label class="full-width">
+              <span data-i18n="editor_label">Stufen-Editor (römische Zahlen, getrennt durch Leerzeichen, z. B. <code>ii7 V7/V V7 Imaj7 bII^1 #I° iø</code>)</span>
+              <textarea id="p-editor" rows="2" spellcheck="false"></textarea>
+            </label>
+            <div id="p-error" class="inline-warn hide"></div>
+
+            <div class="form-grid">
+              <label>
+                <span><span data-i18n="tempo">Tempo</span>: <strong id="p-bpm-val">100</strong> BPM</span>
+                <div class="range-pair">
+                  <input type="range" id="p-bpm" min="40" max="220" value="100">
+                  <input type="number" id="p-bpm-num" min="40" max="220" value="100" class="num-input">
+                </div>
+              </label>
+              <label>
+                <span data-i18n="beats_per_chord">Schläge / Akkord</span>
+                <select id="p-beats">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4" selected>4</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="repetitions">Wiederholungen</span>
+                <input type="number" id="p-reps" min="1" max="32" value="2" class="num-input">
+              </label>
+              <label>
+                <span data-i18n="modulation">Modulation nach Runden</span>
+                <select id="p-mod">
+                  <option value="none" data-i18n="mod_none">keine</option>
+                  <option value="7" data-i18n="mod_5">Quintenzirkel ↻ (+Quinte)</option>
+                  <option value="5" data-i18n="mod_4">Quartenzirkel (+Quarte)</option>
+                  <option value="1" data-i18n="mod_1">Halbton aufwärts</option>
+                  <option value="r" data-i18n="mod_r">zufällig</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="row toolbar-row">
+              <button class="btn primary" id="p-start">▶ Start</button>
+              <button class="btn" id="p-save" data-i18n="save">Speichern</button>
+              <button class="btn danger hide" id="p-delete" data-i18n="delete_preset">Löschen</button>
+              <label class="check-lbl"><input type="checkbox" id="p-countin"> <span data-i18n="count_in">Vorzähler</span></label>
+              <label class="check-lbl"><input type="checkbox" id="p-metro"> <span data-i18n="metronome">Metronom</span></label>
+              <label class="check-lbl"><input type="checkbox" id="p-grid-mode"> <span data-i18n="beat_grid">Takt-Raster</span></label>
+              <span class="key-status" id="p-key-info"></span>
+            </div>
+
+            <p class="hint" data-i18n="chips_hint">Oben: Stufe (römische Zahl) · Unten: Akkord in der gewählten Tonart · Antippen zum Hören</p>
+            <div class="chips" id="p-chips"></div>
+          </div>
+
+          <div class="card">
+            <h3 data-i18n="sound_midi">🔊 Klang & MIDI</h3>
+            <div class="row">
+              <label class="inline-ctrl">
+                <span data-i18n="play_style">Anschlag</span>
+                <select id="audio-style">
+                  <option value="strum" data-i18n="style_strum">Leicht gebrochen (Strum)</option>
+                  <option value="block" data-i18n="style_block">Blockakkord</option>
+                  <option value="arp" data-i18n="style_arp">Arpeggio</option>
+                </select>
+              </label>
+              <label class="inline-ctrl">
+                <span data-i18n="volume">Lautstärke</span>
+                <input type="range" id="audio-vol" min="0" max="100" value="75" style="width:100px">
+              </label>
+              <label class="check-lbl"><input type="checkbox" id="audio-internal" checked> <span data-i18n="internal_sound">Interner Klang</span></label>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <button class="btn" id="midi-btn" data-i18n="midi_enable">MIDI aktivieren</button>
+              <select id="midi-out"><option value="" data-i18n="midi_none">– kein MIDI-Ausgang –</option></select>
+            </div>
+            <p class="hint" id="midi-status" data-i18n="midi_hint">Web MIDI (Chrome/Edge/Android; nicht iOS-Safari). Eingang: CC1 = Tempo, CC2 = Wiederholungen, CC64 = Start/Stopp. Ausgang: Kanal 1, Bass + Akkord.</p>
+          </div>
+        </section>
+
+        <!-- TAB: GEHÖRBILDUNG & QUIZ -->
+        <section id="tab-e" class="tab-panel hide">
+          <div class="card" id="quiz-root"></div>
+        </section>
+
+        <!-- TAB: AKKORDTABELLE -->
+        <section id="tab-c" class="tab-panel hide">
+          <div class="card">
+            <h2 data-i18n="chords_title">🎸 Akkordtabelle</h2>
+            <div class="form-grid">
+              <label>
+                <span data-i18n="chord_type">Akkordtyp</span>
+                <select id="c-qual"></select>
+              </label>
+              <label>
+                <span data-i18n="display">Darstellung</span>
+                <select id="c-inst">
+                  <option value="Klavier" data-i18n="piano">Klavier</option>
+                  <option value="Gitarre" data-i18n="guitar">Gitarre</option>
+                  <option value="Ukulele" data-i18n="ukulele">Ukulele</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="inversion">Umkehrung</span>
+                <select id="c-inv">
+                  <option value="0" data-i18n="inv_0">Grundstellung</option>
+                  <option value="1" data-i18n="inv_1">1. Umkehrung</option>
+                  <option value="2" data-i18n="inv_2">2. Umkehrung</option>
+                  <option value="3" data-i18n="inv_3">3. Umkehrung (Vierklänge)</option>
+                </select>
+              </label>
+            </div>
+            <p class="hint" data-i18n="table_hint">Tippe einen Akkord an, um ihn sofort zu hören und im Live-View zu untersuchen.</p>
+            <div class="chord-grid" id="c-grid"></div>
+          </div>
+        </section>
+
+        <!-- TAB: QUINTENZIRKEL -->
+        <section id="tab-q" class="tab-panel hide">
+          <div class="card">
+            <h2 data-i18n="circle_title">⭕ Interaktiver Quintenzirkel</h2>
+            <div id="q-circle"></div>
+          </div>
+        </section>
+      </main>
+
+      <!-- STICKY LIVE-VIEW PANEL -->
+      <div id="live-wrap" class="live-wrap">
+        <div class="live-bar">
+          <div class="live-title-group">
+            <strong id="live-chord-name" class="live-chord-name">—</strong>
+            <span id="live-chord-deg" class="live-chord-deg"></span>
+            <span id="live-chord-notes" class="live-chord-notes"></span>
+          </div>
+          <div class="live-actions">
+            <button id="live-play-block" class="btn sm primary" title="Akkord hören" disabled>▶</button>
+            <button id="live-play-arp" class="btn sm" title="Gebrochen (Arpeggio) hören" disabled>♫ Arp</button>
+            <div class="inst-filter" id="label-mode-toggle" role="group" aria-label="Beschriftung">
+              <button data-lmode="notes" class="on" data-i18n="lbl_notes">Töne</button>
+              <button data-lmode="degrees" data-i18n="lbl_degrees">Stufen</button>
+            </div>
+            <div class="inst-filter" id="inst-filter" role="group" aria-label="Ansichten">
+              <button data-view="piano" class="on" data-i18n="piano">Klavier</button>
+              <button data-view="staff" class="on" data-i18n="staff">Noten</button>
+              <button data-view="guitar" class="on" data-i18n="guitar">Gitarre</button>
+              <button data-view="ukulele" data-i18n="ukulele">Ukulele</button>
+            </div>
+            <button id="live-toggle" class="icon-btn sm" title="Live-View ein-/ausklappen" aria-label="Ein-/Ausklappen">▾</button>
+          </div>
+        </div>
+        <div id="live-body" class="live-body">
+          <p class="hint" data-i18n="live_empty">Tippe einen beliebigen Akkord an, um ihn zu hören und auf Klaviatur, im Klaviersystem sowie auf Gitarre & Ukulele zu sehen. Du kannst auch jede Klaviertaste direkt anklicken!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts in dependency order (classic scripts so file:// works seamlessly!) -->
+  <script src="js/i18n.js"></script>
+  <script src="js/theory.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/visuals.js"></script>
+  <script src="js/lessons_part1.js"></script>
+  <script src="js/lessons_part2.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
