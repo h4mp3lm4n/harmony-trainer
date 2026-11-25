@@ -675,6 +675,18 @@ table.sc-tbl td {
 
 .piano-key { cursor: pointer; transition: opacity 0.08s; }
 .piano-key:hover { opacity: 0.85; }
+.piano-key.hl rect:first-of-type { fill: var(--ok) !important; stroke: var(--fg); stroke-width: 1.8; }
+.piano-key.hl text { fill: #fff !important; font-weight: 800; }
+
+.staff-note { cursor: pointer; transition: opacity 0.08s; }
+.staff-note:hover { opacity: 0.72; }
+.staff-note.hl ellipse { fill: var(--ok); }
+.staff-note.hl line { stroke: var(--ok); }
+.staff-note.hl text { fill: var(--ok); font-weight: 700; }
+
+table.sc-tbl td[data-sc-midi] { cursor: pointer; transition: background 0.1s, color 0.1s; }
+table.sc-tbl td[data-sc-midi]:hover { background: var(--surface-2); }
+table.sc-tbl td.hl { background: var(--ok-soft); color: var(--ok); font-weight: 700; }
 
 .chord-grid {
   display: grid;
@@ -811,6 +823,17 @@ g[data-ck] text { pointer-events: none; }
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
+}
+
+.live-voicing-sel {
+  padding: 4px 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  max-width: 245px;
+}
+
+.live-inst-sel {
+  max-width: 158px;
 }
 
 .inst-filter {

@@ -86,10 +86,10 @@
 
             <div class="form-grid">
               <label>
-                <span><span data-i18n="tempo">Tempo</span>: <strong id="p-bpm-val">100</strong> BPM</span>
+                <span><span data-i18n="tempo">Tempo</span>: <strong id="p-bpm-val">84</strong> BPM</span>
                 <div class="range-pair">
-                  <input type="range" id="p-bpm" min="40" max="220" value="100">
-                  <input type="number" id="p-bpm-num" min="40" max="220" value="100" class="num-input">
+                  <input type="range" id="p-bpm" min="40" max="220" value="84">
+                  <input type="number" id="p-bpm-num" min="40" max="220" value="84" class="num-input">
                 </div>
               </label>
               <label>
@@ -135,6 +135,10 @@
             <h3 data-i18n="sound_midi">🔊 Klang & MIDI</h3>
             <div class="row">
               <label class="inline-ctrl">
+                <span data-i18n="instrument">Instrument</span>
+                <select id="audio-inst"></select>
+              </label>
+              <label class="inline-ctrl">
                 <span data-i18n="play_style">Anschlag</span>
                 <select id="audio-style">
                   <option value="strum" data-i18n="style_strum">Leicht gebrochen (Strum)</option>
@@ -159,6 +163,11 @@
         <!-- TAB: GEHÖRBILDUNG & QUIZ -->
         <section id="tab-e" class="tab-panel hide">
           <div class="card" id="quiz-root"></div>
+        </section>
+
+        <!-- TAB: TONLEITERN-EXPLORER -->
+        <section id="tab-s" class="tab-panel hide">
+          <div class="card" id="scale-tool-root"></div>
         </section>
 
         <!-- TAB: AKKORDTABELLE -->
@@ -213,6 +222,8 @@
           <div class="live-actions">
             <button id="live-play-block" class="btn sm primary" title="Akkord hören" disabled>▶</button>
             <button id="live-play-arp" class="btn sm" title="Gebrochen (Arpeggio) hören" disabled>♫ Arp</button>
+            <select id="live-voicing" class="live-voicing-sel" title="Voicing / Stimmführung"></select>
+            <select id="live-inst" class="live-voicing-sel live-inst-sel" title="Instrument / Klang"></select>
             <div class="inst-filter" id="label-mode-toggle" role="group" aria-label="Beschriftung">
               <button data-lmode="notes" class="on" data-i18n="lbl_notes">Töne</button>
               <button data-lmode="degrees" data-i18n="lbl_degrees">Stufen</button>

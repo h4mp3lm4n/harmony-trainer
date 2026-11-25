@@ -124,33 +124,36 @@
 
   /**
    * Grand Staff (Treble + Bass Clef) for a voiced chord { bass, upper }
+   * Strictly classical piano-score layout (curved piano brace, serif clefs & accidentals, pure ink noteheads)
    */
   function grandStaffSVG(voicing, spellMap) {
     const T = MT.theory;
-    const W = 152;
+    const W = 160;
+    const serif = 'Georgia, &quot;Times New Roman&quot;, serif';
     let h = '';
 
-    // Brace line on left
-    h += `<line x1="8" y1="24" x2="8" y2="144" stroke="currentColor" stroke-width="2.5"/>`;
+    // Classical curved piano brace + thin opening system barline + closing barline
+    h += `<path d="M13 24 C6 26, 7 50, 9 64 C10 74, 8 81, 3 84 C8 87, 10 94, 9 104 C7 118, 6 142, 13 144 C9 140, 10 118, 12 104 C13 94, 11 87, 6 84 C11 81, 13 74, 12 64 C10 50, 9 28, 13 24 Z" fill="currentColor"/>`;
+    h += `<line x1="16" y1="24" x2="16" y2="144" stroke="currentColor" stroke-width="1.2"/>`;
+    h += `<line x1="${W - 6}" y1="24" x2="${W - 6}" y2="144" stroke="currentColor" stroke-width="1.1"/>`;
 
     // Treble staff lines (y = 24, 34, 44, 54, 64 -> F5, D5, B4, G4, E4)
     [24, 34, 44, 54, 64].forEach(y => {
-      h += `<line x1="8" x2="${W - 4}" y1="${y}" y2="${y}" stroke="currentColor" stroke-width="1"/>`;
+      h += `<line x1="16" x2="${W - 6}" y1="${y}" y2="${y}" stroke="currentColor" stroke-width="1"/>`;
     });
     // Bass staff lines (y = 104, 114, 124, 134, 144 -> A3, F3, D3, B2, G2)
     [104, 114, 124, 134, 144].forEach(y => {
-      h += `<line x1="8" x2="${W - 4}" y1="${y}" y2="${y}" stroke="currentColor" stroke-width="1"/>`;
+      h += `<line x1="16" x2="${W - 6}" y1="${y}" y2="${y}" stroke="currentColor" stroke-width="1"/>`;
     });
 
-    // Clef symbols
-    h += `<text x="12" y="61" font-size="52" fill="currentColor">𝄞</text>`;
-    h += `<text x="13" y="136" font-size="44" fill="currentColor">𝄢</text>`;
+    // Classic serif clef symbols
+    h += `<text x="20" y="61" font-size="52" font-family="${serif}" fill="currentColor">𝄞</text>`;
+    h += `<text x="21" y="136" font-size="44" font-family="${serif}" fill="currentColor">𝄢</text>`;
 
-    // Split notes: bass in bass clef (or <60), upper in treble clef
     const trebleNotes = (voicing.upper || []).slice().sort((a, b) => a - b);
     const bassNotes = voicing.bass != null ? [voicing.bass] : [];
 
-    function renderGroup(notes, isTreble, color) {
+    function renderGroup(notes, isTreble) {
       let prevD = -99;
       let shifted = 0;
       const usedAccSlots = [];
@@ -163,9 +166,9 @@
         const y = isTreble ? 64 - (d - 30) * 5 : 104 + (26 - d) * 5;
         shifted = (d - prevD <= 1 && !shifted) ? 1 : 0;
         prevD = d;
-        const x = 96 + shifted * 13;
+        const x = 104 + shifted * 12.5;
 
-        // Ledger lines
+        // Classical ledger lines
         if (isTreble) {
           for (let ly = 74; ly <= y + 1; ly += 10) h += ledger(x, ly);
           for (let ly = 14; ly >= y - 1; ly -= 10) h += ledger(x, ly);
@@ -174,7 +177,7 @@
           for (let ly = 154; ly <= y + 1; ly += 10) h += ledger(x, ly);
         }
 
-        h += `<ellipse cx="${x}" cy="${y}" rx="6.5" ry="4.6" fill="${color}" transform="rotate(-14 ${x} ${y})"/>`;
+        h += `<ellipse cx="${x}" cy="${y}" rx="6.2" ry="4.4" fill="currentColor" transform="rotate(-18 ${x} ${y})"/>`;
 
         if (acc) {
           let ax = x - 18 - (acc.length - 1) * 8;
@@ -182,15 +185,15 @@
             ax -= 13;
           }
           usedAccSlots.push(y);
-          h += `<text x="${ax}" y="${y + 5.5}" font-size="17" font-weight="700" fill="${color}">${acc}</text>`;
+          h += `<text x="${ax}" y="${y + 5.5}" font-size="17" font-family="${serif}" fill="currentColor">${acc}</text>`;
         }
       });
     }
 
-    renderGroup(trebleNotes, true, 'currentColor');
-    renderGroup(bassNotes, false, 'var(--root)');
+    renderGroup(trebleNotes, true);
+    renderGroup(bassNotes, false);
 
-    return `<svg viewBox="0 0 ${W} 168" style="width:100%;max-width:160px;color:var(--fg)" aria-label="Notensystem">${h}</svg>`;
+    return `<svg viewBox="0 0 ${W} 168" style="width:100%;max-width:168px;color:var(--fg)" aria-label="Klassisches Klaviersystem">${h}</svg>`;
   }
 
   /**
@@ -226,7 +229,166 @@
   }
 
   /**
-   * Key signature staff SVG for Circle of Fifths
+   * Classical engraved scale notation staff (strictly traditional sheet-music layout:
+   * classic clef, barlines, quarter-note stems, ledger lines, accidentals & natural cancellations, final double barline)
+   */
+  function scaleStaffSVG(items, clef = 'treble') {
+    if (!items || !items.length) return '';
+    const isTreble = clef !== 'bass';
+    const topY = 42;
+    const midY = topY + 20;
+    const botY = topY + 40;
+    const stepX = 44;
+    const startX = 76;
+    const W = startX + items.length * stepX + 18;
+    const serif = 'Georgia, &quot;Times New Roman&quot;, serif';
+
+    let h = '';
+    // Five staff lines
+    for (let i = 0; i < 5; i++) {
+      const y = topY + i * 10;
+      h += `<line x1="12" x2="${W - 10}" y1="${y}" y2="${y}" stroke="currentColor" stroke-width="1"/>`;
+    }
+    // Opening barline & classical final double barline
+    h += `<line x1="12" x2="12" y1="${topY}" y2="${botY}" stroke="currentColor" stroke-width="1.3"/>`;
+    h += `<line x1="${W - 15}" x2="${W - 15}" y1="${topY}" y2="${botY}" stroke="currentColor" stroke-width="1.1"/>`;
+    h += `<line x1="${W - 10}" x2="${W - 10}" y1="${topY}" y2="${botY}" stroke="currentColor" stroke-width="3.2"/>`;
+
+    // Classical clef
+    h += isTreble
+      ? `<text x="16" y="${botY - 3}" font-size="52" font-family="${serif}" fill="currentColor">𝄞</text>`
+      : `<text x="16" y="${topY + 32}" font-size="44" font-family="${serif}" fill="currentColor">𝄢</text>`;
+
+    // Track active accidentals per diatonic step for proper natural (♮) cancellations
+    const activeAcc = {};
+
+    items.forEach(([midi, rawName], i) => {
+      const acc = rawName.slice(1);
+      const d = diatonicStep(midi, rawName);
+      const y = isTreble ? (botY - (d - 30) * 5) : (topY + (26 - d) * 5);
+      const x = startX + i * stepX;
+      const pc = ((midi % 12) + 12) % 12;
+
+      h += `<g class="staff-note" data-midi="${midi}" data-pc="${pc}">`;
+      h += `<rect x="${x - 16}" y="${topY - 24}" width="32" height="${botY - topY + 68}" fill="transparent"/>`;
+
+      // Ledger lines below / above staff
+      for (let ly = botY + 10; ly <= y + 1; ly += 10) {
+        h += `<line x1="${x - 10}" x2="${x + 10}" y1="${ly}" y2="${ly}" stroke="currentColor" stroke-width="1.1"/>`;
+      }
+      for (let ly = topY - 10; ly >= y - 1; ly -= 10) {
+        h += `<line x1="${x - 10}" x2="${x + 10}" y1="${ly}" y2="${ly}" stroke="currentColor" stroke-width="1.1"/>`;
+      }
+
+      // Classical quarter-note stem (up below middle line, down on/above middle line)
+      const stemUp = y > midY;
+      if (stemUp) {
+        h += `<line x1="${x + 5.7}" x2="${x + 5.7}" y1="${y - 1}" y2="${y - 31}" stroke="currentColor" stroke-width="1.35"/>`;
+      } else {
+        h += `<line x1="${x - 5.7}" x2="${x - 5.7}" y1="${y + 1}" y2="${y + 31}" stroke="currentColor" stroke-width="1.35"/>`;
+      }
+
+      // Tilted engraved notehead
+      h += `<ellipse cx="${x}" cy="${y}" rx="6.2" ry="4.4" fill="currentColor" transform="rotate(-18 ${x} ${y})"/>`;
+
+      // Accidental or natural sign
+      let printAcc = '';
+      if (acc) {
+        if (activeAcc[d] !== acc) {
+          printAcc = acc;
+          activeAcc[d] = acc;
+        }
+      } else if (activeAcc[d]) {
+        printAcc = '♮';
+        activeAcc[d] = '';
+      }
+      if (printAcc) {
+        const ax = x - 18 - (printAcc.length - 1) * 7;
+        h += `<text x="${ax}" y="${y + 5.5}" font-size="17" font-family="${serif}" fill="currentColor">${printAcc}</text>`;
+      }
+
+      // Clean classic note label below staff
+      const disp = MT.theory.fmtNote(rawName);
+      h += `<text x="${x}" y="${botY + 38}" text-anchor="middle" font-size="11.5" font-family="${serif}" fill="var(--muted)">${disp}</text>`;
+      h += `</g>`;
+    });
+
+    const H = botY + 48;
+    return `<div style="overflow-x:auto"><svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:${Math.min(W, 320)}px;max-width:${Math.min(720, W * 1.15)}px;color:var(--fg)" aria-label="Klassische Tonleiter-Notation">${h}</svg></div>`;
+  }
+
+  /**
+   * Classical engraved enharmonic comparison staff:
+   * each pair [midi, rawA, rawB] is placed in its own bar separated by classical barlines,
+   * visually demonstrating two different staff positions for the exact same sounding pitch.
+   */
+  function enharmonicStaffSVG(pairs) {
+    if (!pairs || !pairs.length) return '';
+    const topY = 42;
+    const midY = topY + 20;
+    const botY = topY + 40;
+    const barW = 92;
+    const startX = 62;
+    const W = startX + pairs.length * barW + 14;
+    const serif = 'Georgia, &quot;Times New Roman&quot;, serif';
+
+    let h = '';
+    for (let i = 0; i < 5; i++) {
+      const y = topY + i * 10;
+      h += `<line x1="12" x2="${W - 10}" y1="${y}" y2="${y}" stroke="currentColor" stroke-width="1"/>`;
+    }
+    // Opening barline + treble clef
+    h += `<line x1="12" x2="12" y1="${topY}" y2="${botY}" stroke="currentColor" stroke-width="1.3"/>`;
+    h += `<text x="16" y="${botY - 3}" font-size="52" font-family="${serif}" fill="currentColor">𝄞</text>`;
+
+    function drawClassicNote(x, midi, rawName) {
+      const acc = rawName.slice(1);
+      const d = diatonicStep(midi, rawName);
+      const y = botY - (d - 30) * 5;
+      for (let ly = botY + 10; ly <= y + 1; ly += 10) {
+        h += `<line x1="${x - 10}" x2="${x + 10}" y1="${ly}" y2="${ly}" stroke="currentColor" stroke-width="1.1"/>`;
+      }
+      for (let ly = topY - 10; ly >= y - 1; ly -= 10) {
+        h += `<line x1="${x - 10}" x2="${x + 10}" y1="${ly}" y2="${ly}" stroke="currentColor" stroke-width="1.1"/>`;
+      }
+      if (y > midY) {
+        h += `<line x1="${x + 5.7}" x2="${x + 5.7}" y1="${y - 1}" y2="${y - 31}" stroke="currentColor" stroke-width="1.35"/>`;
+      } else {
+        h += `<line x1="${x - 5.7}" x2="${x - 5.7}" y1="${y + 1}" y2="${y + 31}" stroke="currentColor" stroke-width="1.35"/>`;
+      }
+      h += `<ellipse cx="${x}" cy="${y}" rx="6.2" ry="4.4" fill="currentColor" transform="rotate(-18 ${x} ${y})"/>`;
+      if (acc) {
+        h += `<text x="${x - 18}" y="${y + 5.5}" font-size="17" font-family="${serif}" fill="currentColor">${acc}</text>`;
+      }
+    }
+
+    pairs.forEach(([midi, rawA, rawB], idx) => {
+      const bx = startX + idx * barW;
+      const x1 = bx + 26;
+      const x2 = bx + 68;
+      drawClassicNote(x1, midi, rawA);
+      drawClassicNote(x2, midi, rawB);
+
+      const dispA = MT.theory.fmtNote(rawA);
+      const dispB = MT.theory.fmtNote(rawB);
+      h += `<text x="${(x1 + x2) / 2}" y="${botY + 38}" text-anchor="middle" font-size="11.5" font-family="${serif}" fill="var(--muted)">${dispA} = ${dispB}</text>`;
+
+      // Barline after each pair (final double barline at end)
+      const barEnd = bx + barW;
+      if (idx < pairs.length - 1) {
+        h += `<line x1="${barEnd}" x2="${barEnd}" y1="${topY}" y2="${botY}" stroke="currentColor" stroke-width="1"/>`;
+      } else {
+        h += `<line x1="${W - 15}" x2="${W - 15}" y1="${topY}" y2="${botY}" stroke="currentColor" stroke-width="1.1"/>`;
+        h += `<line x1="${W - 10}" x2="${W - 10}" y1="${topY}" y2="${botY}" stroke="currentColor" stroke-width="3.2"/>`;
+      }
+    });
+
+    const H = botY + 48;
+    return `<div style="overflow-x:auto"><svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:${Math.min(W, 380)}px;max-width:${Math.min(720, W * 1.15)}px;color:var(--fg)" aria-label="Enharmonische Verwechslung im Notensystem">${h}</svg></div>`;
+  }
+
+  /**
+   * Key signature staff SVG for Circle of Fifths (classical layout)
    */
   function keySigSVG(key) {
     const T = MT.theory;
@@ -234,14 +396,17 @@
     const isSharp = step > 0 && step <= 6;
     const count = isSharp ? step : (12 - step) % 12;
     const D = isSharp ? [38, 35, 39, 36, 33, 37, 34] : [34, 37, 33, 36, 32, 35, 31];
+    const serif = 'Georgia, &quot;Times New Roman&quot;, serif';
     let h = '';
     [24, 34, 44, 54, 64].forEach(y => {
-      h += `<line x1="6" x2="156" y1="${y}" y2="${y}" stroke="currentColor" stroke-width="1"/>`;
+      h += `<line x1="8" x2="156" y1="${y}" y2="${y}" stroke="currentColor" stroke-width="1"/>`;
     });
-    h += `<text x="10" y="61" font-size="52" fill="currentColor">𝄞</text>`;
+    h += `<line x1="8" x2="8" y1="24" y2="64" stroke="currentColor" stroke-width="1.2"/>`;
+    h += `<line x1="156" x2="156" y1="24" y2="64" stroke="currentColor" stroke-width="1.1"/>`;
+    h += `<text x="12" y="61" font-size="52" font-family="${serif}" fill="currentColor">𝄞</text>`;
     for (let i = 0; i < count; i++) {
       const y = 70 - (D[i] - 30) * 5;
-      h += `<text x="${46 + i * 14}" y="${y}" font-size="21" font-weight="700" fill="currentColor">${isSharp ? '♯' : '♭'}</text>`;
+      h += `<text x="${48 + i * 14}" y="${y}" font-size="20" font-family="${serif}" fill="currentColor">${isSharp ? '♯' : '♭'}</text>`;
     }
     const lbl = count ? `${count} ${isSharp ? '♯' : '♭'}` : MT.t('no_accidentals');
     return `<svg viewBox="0 0 162 84" style="width:162px;color:var(--fg)">${h}</svg><div class="hint">${MT.t('key_sig_label')}: <b>${lbl}</b></div>`;
@@ -462,38 +627,77 @@
   }
 
   /**
-   * Clear, large SVG table of Note Values & Rests (font-independent!)
+   * Classical engraved SVG table of Note Values & Rests
+   * Generous 10px line spacing makes whole rest (hanging under line 4) vs. half rest (sitting on line 3) unmistakable!
    */
   function noteRestTableHTML() {
     const en = MT.state.lang === 'en';
     const miniStaff = inner =>
-      `<svg viewBox="0 0 64 48" width="64" height="48" style="color:var(--fg);vertical-align:middle">
-         <g stroke="var(--muted)" stroke-width="0.9" opacity="0.7">
-           <line x1="4" y1="10" x2="60" y2="10"/>
-           <line x1="4" y1="17" x2="60" y2="17"/>
-           <line x1="4" y1="24" x2="60" y2="24"/>
-           <line x1="4" y1="31" x2="60" y2="31"/>
-           <line x1="4" y1="38" x2="60" y2="38"/>
+      `<svg viewBox="0 0 84 62" width="84" height="62" style="color:var(--fg);vertical-align:middle">
+         <g stroke="currentColor" stroke-width="0.9" opacity="0.65">
+           <line x1="4" y1="12" x2="80" y2="12"/>
+           <line x1="4" y1="22" x2="80" y2="22"/>
+           <line x1="4" y1="32" x2="80" y2="32"/>
+           <line x1="4" y1="42" x2="80" y2="42"/>
+           <line x1="4" y1="52" x2="80" y2="52"/>
          </g>
          ${inner}
        </svg>`;
 
-    const noteWhole = miniStaff(`<ellipse cx="32" cy="27.5" rx="7" ry="4.5" fill="none" stroke="currentColor" stroke-width="2.2"/>`);
-    const noteHalf = miniStaff(`<ellipse cx="28" cy="31" rx="6.2" ry="4.3" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(-18 28 31)"/><line x1="33.5" y1="30" x2="33.5" y2="7" stroke="currentColor" stroke-width="2"/>`);
-    const noteQuarter = miniStaff(`<ellipse cx="28" cy="31" rx="6.2" ry="4.4" fill="currentColor" transform="rotate(-18 28 31)"/><line x1="33.5" y1="30" x2="33.5" y2="7" stroke="currentColor" stroke-width="2"/>`);
-    const noteEighth = miniStaff(`<ellipse cx="26" cy="31" rx="6.2" ry="4.4" fill="currentColor" transform="rotate(-18 26 31)"/><line x1="31.5" y1="30" x2="31.5" y2="7" stroke="currentColor" stroke-width="2"/><path d="M31.5 7 C40 11, 42 18, 37 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>`);
-    const noteSixteenth = miniStaff(`<ellipse cx="26" cy="31" rx="6.2" ry="4.4" fill="currentColor" transform="rotate(-18 26 31)"/><line x1="31.5" y1="30" x2="31.5" y2="7" stroke="currentColor" stroke-width="2"/><path d="M31.5 7 C40 10, 42 16, 37 21" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><path d="M31.5 13 C40 16, 42 22, 37 27" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>`);
+    // Classic engraved notes (positioned cleanly on line 2 = y=42 or space 2 = y=37)
+    const noteWhole = miniStaff(
+      `<ellipse cx="42" cy="37" rx="7.6" ry="4.9" fill="none" stroke="currentColor" stroke-width="2.2"/>
+       <ellipse cx="42" cy="37" rx="4.2" ry="3.4" fill="var(--surface)" transform="rotate(24 42 37)"/>`
+    );
+    const noteHalf = miniStaff(
+      `<ellipse cx="38" cy="42" rx="6.6" ry="4.5" fill="none" stroke="currentColor" stroke-width="2.1" transform="rotate(-18 38 42)"/>
+       <line x1="44" y1="40.5" x2="44" y2="10" stroke="currentColor" stroke-width="1.6"/>`
+    );
+    const noteQuarter = miniStaff(
+      `<ellipse cx="38" cy="42" rx="6.6" ry="4.6" fill="currentColor" transform="rotate(-18 38 42)"/>
+       <line x1="44" y1="40.5" x2="44" y2="10" stroke="currentColor" stroke-width="1.6"/>`
+    );
+    const noteEighth = miniStaff(
+      `<ellipse cx="36" cy="42" rx="6.6" ry="4.6" fill="currentColor" transform="rotate(-18 36 42)"/>
+       <line x1="42" y1="40.5" x2="42" y2="10" stroke="currentColor" stroke-width="1.6"/>
+       <path d="M42 10 C48 14, 54 20, 50 30 C51 23, 47 18, 42 15 Z" fill="currentColor"/>`
+    );
+    const noteSixteenth = miniStaff(
+      `<ellipse cx="36" cy="42" rx="6.6" ry="4.6" fill="currentColor" transform="rotate(-18 36 42)"/>
+       <line x1="42" y1="40.5" x2="42" y2="10" stroke="currentColor" stroke-width="1.6"/>
+       <path d="M42 10 C48 13, 54 19, 50 27 C51 21, 47 17, 42 14 Z" fill="currentColor"/>
+       <path d="M42 18 C48 21, 54 27, 50 35 C51 29, 47 25, 42 22 Z" fill="currentColor"/>`
+    );
 
-    // Rests: Whole hangs from 4th line (y=17), Half sits on 3rd line (y=24)
-    const restWhole = miniStaff(`<rect x="23" y="17" width="18" height="5.5" fill="currentColor"/>`);
-    const restHalf = miniStaff(`<rect x="23" y="18.5" width="18" height="5.5" fill="currentColor"/>`);
-    const restQuarter = miniStaff(`<path d="M29 10 L35 17 L28 24 L35 31 C31 31, 27 33, 29 37 C30 39, 33 40, 35 39" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`);
-    const restEighth = miniStaff(`<circle cx="28" cy="18" r="2.8" fill="currentColor"/><path d="M29 19 C33 20, 36 18, 37 15 L31 35" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>`);
-    const restSixteenth = miniStaff(`<circle cx="29" cy="15" r="2.5" fill="currentColor"/><path d="M30 16 C33 17, 36 15, 37 13" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="27" cy="23" r="2.5" fill="currentColor"/><path d="M28 24 C32 25, 34 23, 35 21" fill="none" stroke="currentColor" stroke-width="2"/><line x1="37" y1="13" x2="30" y2="37" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>`);
+    // Rests on 10px-spaced classical staff:
+    // Line 4 = y=22, Line 3 = y=32 -> 4.4px bar leaves a huge unmistakable 5.6px white gap!
+    const restWhole = miniStaff(
+      `<line x1="26" y1="22" x2="58" y2="22" stroke="currentColor" stroke-width="1.5"/>
+       <rect x="33" y="22" width="18" height="4.4" fill="currentColor"/>`
+    );
+    const restHalf = miniStaff(
+      `<line x1="26" y1="32" x2="58" y2="32" stroke="currentColor" stroke-width="1.5"/>
+       <rect x="33" y="27.6" width="18" height="4.4" fill="currentColor"/>`
+    );
+    // Classical engraved quarter rest (calligraphic path)
+    const restQuarter = miniStaff(
+      `<path d="M40 14 L46 22 C42 25, 38 28, 41 32 L46 37 C41 36, 37 39, 39 44 C40 46, 43 47, 45 46 C42 45, 41 42, 43 40 C45 39, 47 40, 48 41 L42 32 C46 28, 49 25, 47 21 L41 13 Z" fill="currentColor"/>`
+    );
+    const restEighth = miniStaff(
+      `<circle cx="37" cy="26" r="3" fill="currentColor"/>
+       <path d="M38 27.5 C42 28.5, 46 26, 48 22.5 L40.5 47" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>`
+    );
+    const restSixteenth = miniStaff(
+      `<circle cx="39" cy="21" r="2.7" fill="currentColor"/>
+       <path d="M40 22.2 C43.5 23, 46.5 21, 48 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+       <circle cx="36" cy="31" r="2.7" fill="currentColor"/>
+       <path d="M37 32.2 C41 33, 44 31, 45.5 28" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+       <line x1="48" y1="18" x2="39.5" y2="49" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>`
+    );
 
     const rows = [
-      [en ? 'Whole' : 'Ganze', noteWhole, restWhole, en ? '4 beats' : '4 Schläge', en ? 'Rest hangs under line 4' : 'Pause hängt unter der 4. Linie'],
-      [en ? 'Half' : 'Halbe', noteHalf, restHalf, en ? '2 beats' : '2 Schläge', en ? 'Rest sits on line 3 (“hat”)' : 'Pause liegt auf der 3. Linie („Hut“)' ],
+      [en ? 'Whole' : 'Ganze', noteWhole, restWhole, en ? '4 beats' : '4 Schläge', en ? 'Rest hangs down from line 4' : 'Pause hängt unter der 4. Linie herunter'],
+      [en ? 'Half' : 'Halbe', noteHalf, restHalf, en ? '2 beats' : '2 Schläge', en ? 'Rest sits upward on line 3 (“hat”)' : 'Pause steht auf der 3. Linie nach oben („Hut“)' ],
       [en ? 'Quarter' : 'Viertel', noteQuarter, restQuarter, en ? '1 beat' : '1 Schlag', en ? 'Pulse in 4/4 & 3/4' : 'Grundschlag im 4/4- & 3/4-Takt'],
       [en ? 'Eighth' : 'Achtel', noteEighth, restEighth, en ? '½ beat' : '½ Schlag', en ? 'Two per quarter beat' : 'Zwei pro Viertelschlag'],
       [en ? 'Sixteenth' : 'Sechzehntel', noteSixteenth, restSixteenth, en ? '¼ beat' : '¼ Schlag', en ? 'Four per quarter beat' : 'Vier pro Viertelschlag']
@@ -515,32 +719,76 @@
   }
 
   /**
-   * Clear visual guide to Barlines, Repeats, Dotted Notes, Ties & Articulations
+   * Strictly classical engraved guide to Barlines, Repeats, Dotted Notes, Ties & Articulations
    */
   function articulationSymbolsHTML() {
     const en = MT.state.lang === 'en';
     const box = (w, inner) =>
-      `<svg viewBox="0 0 ${w} 46" width="${w}" height="46" style="color:var(--fg);vertical-align:middle">
-         <g stroke="var(--muted)" stroke-width="0.9" opacity="0.65">
-           <line x1="2" y1="10" x2="${w - 2}" y2="10"/>
-           <line x1="2" y1="17" x2="${w - 2}" y2="17"/>
-           <line x1="2" y1="24" x2="${w - 2}" y2="24"/>
-           <line x1="2" y1="31" x2="${w - 2}" y2="31"/>
-           <line x1="2" y1="38" x2="${w - 2}" y2="38"/>
+      `<svg viewBox="0 0 ${w} 62" width="${w}" height="62" style="color:var(--fg);vertical-align:middle">
+         <g stroke="currentColor" stroke-width="0.9" opacity="0.65">
+           <line x1="2" y1="12" x2="${w - 2}" y2="12"/>
+           <line x1="2" y1="22" x2="${w - 2}" y2="22"/>
+           <line x1="2" y1="32" x2="${w - 2}" y2="32"/>
+           <line x1="2" y1="42" x2="${w - 2}" y2="42"/>
+           <line x1="2" y1="52" x2="${w - 2}" y2="52"/>
          </g>
          ${inner}
        </svg>`;
 
-    const symDotted = box(68, `<ellipse cx="26" cy="27.5" rx="6" ry="4.2" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(-18 26 27.5)"/><line x1="31.5" y1="26.5" x2="31.5" y2="6" stroke="currentColor" stroke-width="2"/><circle cx="39" cy="27.5" r="2.6" fill="var(--accent)"/>`);
-    const symTie = box(82, `<ellipse cx="22" cy="27.5" rx="5.5" ry="4" fill="currentColor" transform="rotate(-18 22 27.5)"/><line x1="27" y1="26.5" x2="27" y2="8" stroke="currentColor" stroke-width="1.8"/><ellipse cx="56" cy="27.5" rx="5.5" ry="4" fill="currentColor" transform="rotate(-18 56 27.5)"/><line x1="61" y1="26.5" x2="61" y2="8" stroke="currentColor" stroke-width="1.8"/><path d="M23 34 Q39 44 55 34" fill="none" stroke="var(--accent)" stroke-width="2.4"/>`);
-    const symBar = box(68, `<line x1="34" y1="10" x2="34" y2="38" stroke="currentColor" stroke-width="2.2"/>`);
-    const symFinal = box(68, `<line x1="30" y1="10" x2="30" y2="38" stroke="currentColor" stroke-width="1.5"/><line x1="37" y1="10" x2="37" y2="38" stroke="currentColor" stroke-width="4.5"/>`);
-    const symRepeat = box(72, `<circle cx="24" cy="20.5" r="2.3" fill="var(--accent)"/><circle cx="24" cy="27.5" r="2.3" fill="var(--accent)"/><line x1="32" y1="10" x2="32" y2="38" stroke="currentColor" stroke-width="1.5"/><line x1="39" y1="10" x2="39" y2="38" stroke="currentColor" stroke-width="4.5"/>`);
-    const symStaccato = box(68, `<ellipse cx="32" cy="27.5" rx="5.8" ry="4.1" fill="currentColor" transform="rotate(-18 32 27.5)"/><line x1="37.2" y1="26.5" x2="37.2" y2="8" stroke="currentColor" stroke-width="1.9"/><circle cx="32" cy="37" r="2.6" fill="var(--accent)"/>`);
-    const symLegato = box(86, `<ellipse cx="20" cy="31" rx="5.3" ry="3.8" fill="currentColor" transform="rotate(-18 20 31)"/><line x1="25" y1="30" x2="25" y2="12" stroke="currentColor" stroke-width="1.7"/><ellipse cx="42" cy="24" rx="5.3" ry="3.8" fill="currentColor" transform="rotate(-18 42 24)"/><line x1="47" y1="23" x2="47" y2="6" stroke="currentColor" stroke-width="1.7"/><ellipse cx="64" cy="27.5" rx="5.3" ry="3.8" fill="currentColor" transform="rotate(-18 64 27.5)"/><line x1="69" y1="26.5" x2="69" y2="9" stroke="currentColor" stroke-width="1.7"/><path d="M18 38 Q42 46 66 36" fill="none" stroke="var(--accent)" stroke-width="2.4"/>`);
-    const symTenuto = box(68, `<ellipse cx="32" cy="27.5" rx="5.8" ry="4.1" fill="currentColor" transform="rotate(-18 32 27.5)"/><line x1="37.2" y1="26.5" x2="37.2" y2="8" stroke="currentColor" stroke-width="1.9"/><line x1="25" y1="37" x2="39" y2="37" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round"/>`);
-    const symAccent = box(68, `<ellipse cx="32" cy="27.5" rx="5.8" ry="4.1" fill="currentColor" transform="rotate(-18 32 27.5)"/><line x1="37.2" y1="26.5" x2="37.2" y2="8" stroke="currentColor" stroke-width="1.9"/><path d="M25 35 L39 38.5 L25 42" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>`);
-    const symFermata = box(68, `<ellipse cx="32" cy="27.5" rx="6.2" ry="4.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 13 A12 10 0 0 1 44 13" fill="none" stroke="var(--accent)" stroke-width="2.3"/><circle cx="32" cy="11.5" r="2.2" fill="var(--accent)"/>`);
+    const symDotted = box(78,
+      `<ellipse cx="32" cy="37" rx="6.4" ry="4.4" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(-18 32 37)"/>
+       <line x1="38" y1="35.5" x2="38" y2="8" stroke="currentColor" stroke-width="1.5"/>
+       <circle cx="46" cy="37" r="2.3" fill="currentColor"/>`
+    );
+    const symTie = box(92,
+      `<ellipse cx="26" cy="37" rx="6" ry="4.2" fill="currentColor" transform="rotate(-18 26 37)"/>
+       <line x1="31.6" y1="35.5" x2="31.6" y2="10" stroke="currentColor" stroke-width="1.5"/>
+       <ellipse cx="64" cy="37" rx="6" ry="4.2" fill="currentColor" transform="rotate(-18 64 37)"/>
+       <line x1="69.6" y1="35.5" x2="69.6" y2="10" stroke="currentColor" stroke-width="1.5"/>
+       <path d="M27 44 Q45 56 63 44 Q45 52.5 27 44 Z" fill="currentColor"/>`
+    );
+    const symBar = box(78,
+      `<line x1="39" y1="12" x2="39" y2="52" stroke="currentColor" stroke-width="1.6"/>`
+    );
+    const symFinal = box(78,
+      `<line x1="35" y1="12" x2="35" y2="52" stroke="currentColor" stroke-width="1.3"/>
+       <line x1="42" y1="12" x2="42" y2="52" stroke="currentColor" stroke-width="4.2"/>`
+    );
+    const symRepeat = box(82,
+      `<circle cx="29" cy="27" r="2.2" fill="currentColor"/>
+       <circle cx="29" cy="37" r="2.2" fill="currentColor"/>
+       <line x1="37" y1="12" x2="37" y2="52" stroke="currentColor" stroke-width="1.3"/>
+       <line x1="44" y1="12" x2="44" y2="52" stroke="currentColor" stroke-width="4.2"/>`
+    );
+    const symStaccato = box(78,
+      `<ellipse cx="38" cy="37" rx="6.2" ry="4.3" fill="currentColor" transform="rotate(-18 38 37)"/>
+       <line x1="43.6" y1="35.5" x2="43.6" y2="10" stroke="currentColor" stroke-width="1.5"/>
+       <circle cx="38" cy="47.5" r="2.2" fill="currentColor"/>`
+    );
+    const symLegato = box(96,
+      `<ellipse cx="22" cy="42" rx="5.6" ry="4" fill="currentColor" transform="rotate(-18 22 42)"/>
+       <line x1="27.2" y1="40.5" x2="27.2" y2="16" stroke="currentColor" stroke-width="1.4"/>
+       <ellipse cx="46" cy="32" rx="5.6" ry="4" fill="currentColor" transform="rotate(-18 46 32)"/>
+       <line x1="51.2" y1="30.5" x2="51.2" y2="8" stroke="currentColor" stroke-width="1.4"/>
+       <ellipse cx="70" cy="37" rx="5.6" ry="4" fill="currentColor" transform="rotate(-18 70 37)"/>
+       <line x1="75.2" y1="35.5" x2="75.2" y2="11" stroke="currentColor" stroke-width="1.4"/>
+       <path d="M21 49 Q46 61 71 46 Q46 57.5 21 49 Z" fill="currentColor"/>`
+    );
+    const symTenuto = box(78,
+      `<ellipse cx="38" cy="37" rx="6.2" ry="4.3" fill="currentColor" transform="rotate(-18 38 37)"/>
+       <line x1="43.6" y1="35.5" x2="43.6" y2="10" stroke="currentColor" stroke-width="1.5"/>
+       <line x1="31" y1="47.5" x2="45" y2="47.5" stroke="currentColor" stroke-width="2.1"/>`
+    );
+    const symAccent = box(78,
+      `<ellipse cx="38" cy="37" rx="6.2" ry="4.3" fill="currentColor" transform="rotate(-18 38 37)"/>
+       <line x1="43.6" y1="35.5" x2="43.6" y2="10" stroke="currentColor" stroke-width="1.5"/>
+       <path d="M31 45 L46 49.5 L31 54" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="miter"/>`
+    );
+    const symFermata = box(78,
+      `<ellipse cx="39" cy="37" rx="7.2" ry="4.6" fill="none" stroke="currentColor" stroke-width="2"/>
+       <path d="M25 18 C27 6, 51 6, 53 18 C50 9.5, 28 9.5, 25 18 Z" fill="currentColor"/>
+       <circle cx="39" cy="15.5" r="2.1" fill="currentColor"/>`
+    );
 
     const rows = [
       [symDotted, en ? 'Dotted note' : 'Punktierte Note', en ? 'A dot behind a note adds <b>half its value</b> (e.g. dotted half = 2 + 1 = 3 beats; dotted quarter = 1½ beats).' : 'Ein Punkt <b>hinter</b> dem Notenkopf verlängert die Note um die <b>Hälfte ihres Wertes</b> (punktierte Halbe = 2 + 1 = 3 Schläge; punktierte Viertel = 1½ Schläge).'],
@@ -572,6 +820,8 @@
     pianoSVG,
     grandStaffSVG,
     singleStaffSVG,
+    scaleStaffSVG,
+    enharmonicStaffSVG,
     keySigSVG,
     fretSVG,
     circleHTML,

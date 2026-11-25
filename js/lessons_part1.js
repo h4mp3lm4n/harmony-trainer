@@ -26,14 +26,36 @@
       lessons: ['modes', 'exotic_scales']
     },
     {
-      id: 'advanced',
-      title: { de: 'Fortgeschrittene Harmonielehre', en: 'Advanced Harmony' },
+      id: 'adv_jazz',
+      title: { de: 'Jazz-, Blues- & Gospel-Harmonik', en: 'Jazz, Blues & Gospel Harmony' },
       lessons: [
         'ii_v_i_maj', 'ii_v_chains', 'ii_v_i_min',
         'secondary_dom', 'dim_passing', 'tritone_sub',
-        'modal_interchange', 'backdoor_cadence', 'line_cliches',
-        'chromatic_mediants', 'pedal_upper', 'modulation',
-        'neapolitan'
+        'jazz_blues', 'gospel_harmony',
+        'rhythm_royal', 'coltrane_changes'
+      ]
+    },
+    {
+      id: 'adv_color',
+      title: { de: 'Klangfarben, Filmmusik & Moderne', en: 'Color, Film & Modern Harmony' },
+      lessons: [
+        'line_cliches', 'pedal_upper', 'planing_structures',
+        'modal_interchange', 'backdoor_cadence', 'chromatic_mediants',
+        'quartal_harmony', 'negative_harmony'
+      ]
+    },
+    {
+      id: 'adv_neosoul',
+      title: { de: 'Neo-Soul, R&B & Exotische Groove-Sounds', en: 'Neo-Soul, R&B & Exotic Groove Sounds' },
+      lessons: [
+        'neosoul_grooves', 'neosoul_exotic'
+      ]
+    },
+    {
+      id: 'adv_craft',
+      title: { de: 'Stimmführung, Klassik & Reharmonisierung', en: 'Counterpoint, Classical & Reharmonization' },
+      lessons: [
+        'counterpoint', 'modulation', 'neapolitan', 'reharmonization'
       ]
     },
     {
@@ -58,14 +80,14 @@
                <ul>
                  <li><strong>Jeder Akkord klingt sofort:</strong> Tippe ein beliebiges Akkordfeld an, um es zu hören und unten im <b>Live-View</b> auf Klaviatur, im Klaviersystem sowie auf Gitarre und Ukulele zu sehen.</li>
                  <li><strong>Interaktive Klaviatur:</strong> Jede Taste im Live-View ist anklickbar – probiere Töne direkt aus!</li>
-                 <li><strong>B / B♭ oder H / B?</strong> Oben rechts stellst du mit einem Klick zwischen internationaler Schreibweise (<code>B / B♭</code>) und deutscher Schulschreibweise (<code>H / B</code>) um.</li>
+                 <li><strong>Deutsche vs. internationale Schreibweise (<code>H / B</code> ↔ <code>B / B♭</code>):</strong> Auf Deutsch nutzt der Trainer automatisch die deutsche Schreibweise (<code>H / B</code>), auf Englisch automatisch die internationale (<code>B / B♭</code>). Möchtest du auch auf Deutsch lieber international mit <code>B / B♭</code> arbeiten (wie in vielen Pop- und Jazz-Büchern), stelle oben rechts einfach auf <b>B / B♭</b> um.</li>
                </ul>`,
           en: `<p>This trainer guides you step by step from your first chord to advanced harmony — right in your browser on phone, tablet, or desktop.</p>
                <div class="callout tip"><strong>Getting started</strong>You don't need to read sheet music to begin! Starting in <b>C major</b> (no accidentals) makes patterns easiest to grasp — and whenever you pick another key at the top, all explanations, tables, inversions, and audio examples transpose automatically!</div>
                <ul>
                  <li><strong>Every chord sounds immediately:</strong> Tap any chord tile to hear it and inspect it in the <b>Live View</b> below on piano, grand staff, guitar, and ukulele.</li>
                  <li><strong>Interactive piano:</strong> Click or tap any key in the Live View to hear individual notes.</li>
-                 <li><strong>Your instrument, your view:</strong> Filter the Live View to show only the instruments you need (e.g. Piano + Staff, or Guitar only).</li>
+                 <li><strong>International vs. German notation (<code>B / B♭</code> ↔ <code>H / B</code>):</strong> English automatically uses international <code>B / B♭</code> while German defaults to <code>H / B</code> — you can toggle the top-right button anytime.</li>
                </ul>`
         },
         examples: [
@@ -90,14 +112,18 @@
                  <li><b>🎸 Akkordtabelle & ⭕ Quintenzirkel:</b> Schnelles Nachschlagen für Klavier, Gitarre und Ukulele.</li>
                </ul>
                <h4>Welche Voicings gibt es?</h4>
-               <p>In den Grundlagen zeigen wir standardmäßig die <b>Grundstellung (Schulbuch)</b>, damit Umkehrungen dich nicht verwirren. Bei den <b>Stimmführungs-Modi</b> bestimmst du die Startlage des ersten Akkords (Grundstellung, 1. oder 2. Umkehrung – oder alle 3 im Zyklus), und alle Folgeakkorde bewegen sich danach automatisch mit <b>minimaler Fingerbewegung</b> (echtes Voice Leading)!</p>`,
+               <p>In den Grundlagen zeigen wir standardmäßig die <b>Grundstellung (Schulbuch)</b>, damit Umkehrungen dich nicht verwirren. Bei den <b>Stimmführungs-Modi</b> bestimmst du die Startlage des ersten Akkords (Grundstellung, 1. oder 2. Umkehrung – oder alle 3 im Zyklus), und alle Folgeakkorde bewegen sich danach automatisch mit <b>minimaler Fingerbewegung</b> (echtes Voice Leading)!</p>
+               <div class="callout tip"><strong>Wichtiger Hör-Tipp: Klingt eine Akkordfolge einmal komisch?</strong>
+               Wenn dir ein Hörbeispiel in der aktuellen Einstellung etwas sperrig, sprunghaft oder ungewohnt vorkommt, schalte unten in der Live-View-Leiste einfach durch die <b>verschiedenen Lagen / Umkehrungen</b> (und Stimmführungs-Modi)! Dieselben Akkorde können in einer anderen Lage oder mit anderem Top-Ton plötzlich viel geschmeidiger, voller und musikalischer klingen.</div>`,
           en: `<ul>
                  <li><b>🎛 Practice Tool:</b> Play presets or custom progressions with beat grid, count-in, metronome, automatic key modulation, and Web MIDI.</li>
                  <li><b>🎯 Ear Training & Quiz:</b> Train your ear on triads, 7th chords, intervals, cadences, and build chords yourself on the piano.</li>
                  <li><b>🎸 Chord Table & ⭕ Circle of Fifths:</b> Quick reference for piano, guitar, and ukulele.</li>
                </ul>
                <h4>How do the voicing modes work?</h4>
-               <p>Basic lessons start in <b>Root position</b> so chord building blocks stay crystal clear. In the <b>Voice-leading modes</b> you pick the starting inversion of the first chord (root, 1st, 2nd — or cycle through all 3), and every following chord moves with <b>minimal hand motion</b>!</p>`
+               <p>Basic lessons start in <b>Root position</b> so chord building blocks stay crystal clear. In the <b>Voice-leading modes</b> you pick the starting inversion of the first chord (root, 1st, 2nd — or cycle through all 3), and every following chord moves with <b>minimal hand motion</b>!</p>
+               <div class="callout tip"><strong>Important listening tip: Does a progression ever sound a bit odd?</strong>
+               If a listening example feels clunky, jumpy, or slightly off in the current setting, try switching through the <b>different inversions / voicing positions</b> in the Live View bar below! The exact same chords often sound dramatically smoother, richer, and more natural in another position.</div>`
         }
       }
     ]
@@ -112,24 +138,74 @@
         title: { de: 'Halbton, Ganzton & die Durtonleiter', en: 'Semitone, Whole Tone & Major Scale' },
         body: {
           de: `<p>Der <b>Halbton (H)</b> ist der kleinste Abstand am Klavier: von einer Taste zur unmittelbar nächsten (egal ob weiß oder schwarz). Zwei Halbtöne sind ein <b>Ganzton (G)</b>. Beispiel: C → D ist ein Ganzton (C♯ liegt dazwischen), E → F ist ein Halbton (keine schwarze Taste dazwischen).</p>
-               <p>Jede <b>Durtonleiter</b> folgt der festen Formel <b>G G H – G G G H</b>. Startest du auf C, brauchst du nur weiße Tasten: C D E F G A [B] C. Startest du auf G, muss der 7. Ton zu F♯ erhöht werden, damit die Formel stimmt.</p>
-               <div class="callout tip"><strong>Merksatz zur Schreibweise</strong>In jeder 7-stufigen Tonleiter kommt jeder Buchstabe (C D E F G A [B]) genau <b>einmal</b> vor. Deshalb heißt der 7. Ton in G-Dur F♯ und nicht G♭.</div>`,
+               <p>Jede <b>Durtonleiter</b> folgt der festen Formel <b>G – G – H – G – G – G – H</b>. Startest du auf C, brauchst du nur weiße Tasten: <code>C – D – E – F – G – A – [B] – C</code>.</p>
+               <div class="callout"><strong>Schritt für Schritt: So entsteht G-Dur (mit der Formel G–G–H–G–G–G–H)</strong>
+               Starte auf <b>G</b> und prüfe jeden einzelnen Schritt am Klavier:
+               <ol style="margin:6px 0 6px 18px;padding:0">
+                 <li><b>G → A</b> = Ganzton (<b>G</b> ✓ – G♯ liegt dazwischen)</li>
+                 <li><b>A → [B]</b> = Ganzton (<b>G</b> ✓ – A♯/[B♭] liegt dazwischen)</li>
+                 <li><b>[B] → C</b> = Halbton (<b>H</b> ✓ – keine schwarze Taste dazwischen!)</li>
+                 <li><b>C → D</b> = Ganzton (<b>G</b> ✓)</li>
+                 <li><b>D → E</b> = Ganzton (<b>G</b> ✓)</li>
+                 <li><b>E → F♯</b> = Ganzton (<b>G</b> ✓) – <em>Achtung!</em> Von E nach F wäre es nur ein Halbton. Weil die Formel hier aber ein <b>G</b> verlangt, erhöhen wir F um einen Halbton auf die schwarze Taste <b>F♯</b>!</li>
+                 <li><b>F♯ → G</b> = Halbton (<b>H</b> ✓ – genau der letzte Halbtonschritt zurück zum Grundton G!)</li>
+               </ol>
+               Ergebnis: <b>G – A – [B] – C – D – E – F♯ – G</b> (genau <b>1 Kreuz: F♯</b>).</div>
+               <div class="callout tip"><strong>Merksatz zur Schreibweise</strong>In jeder 7-stufigen Tonleiter kommt jeder Buchstabe (C D E F G A [B]) genau <b>einmal</b> vor. Deshalb heißt der 7. Ton in G-Dur <b>F♯</b> und nicht G♭ (sonst gäbe es gar kein F und zweimal G!).</div>`,
           en: `<p>A <b>semitone (H)</b> is the smallest distance on the piano: from one key to the very next key (white or black). Two semitones make a <b>whole tone (W)</b>. For example, C → D is a whole tone (C♯ sits between), while E → F is a semitone.</p>
-               <p>Every <b>major scale</b> follows the formula <b>W W H – W W W H</b>. Starting on C uses only white keys: C D E F G A B C. Starting on G requires raising the 7th note to F♯ to keep the formula intact.</p>
-               <div class="callout tip"><strong>Spelling rule</strong>In any 7-note scale each letter (C D E F G A B) appears exactly <b>once</b>. That is why the 7th note of G major is F♯, not G♭.</div>`
+               <p>Every <b>major scale</b> follows the fixed formula <b>W – W – H – W – W – W – H</b>. Starting on C uses only white keys: <code>C – D – E – F – G – A – B – C</code>.</p>
+               <div class="callout"><strong>Step by step: Building G major (with W–W–H–W–W–W–H)</strong>
+               Start on <b>G</b> and check each step on the keyboard:
+               <ol style="margin:6px 0 6px 18px;padding:0">
+                 <li><b>G → A</b> = Whole tone (<b>W</b> ✓)</li>
+                 <li><b>A → B</b> = Whole tone (<b>W</b> ✓)</li>
+                 <li><b>B → C</b> = Half step (<b>H</b> ✓ — no black key in between!)</li>
+                 <li><b>C → D</b> = Whole tone (<b>W</b> ✓)</li>
+                 <li><b>D → E</b> = Whole tone (<b>W</b> ✓)</li>
+                 <li><b>E → F♯</b> = Whole tone (<b>W</b> ✓) — <em>Watch out!</em> E to F is only a half step, so to satisfy the <b>W</b> in the formula we raise F up a semitone to <b>F♯</b>!</li>
+                 <li><b>F♯ → G</b> = Half step (<b>H</b> ✓ — lands cleanly back on G!)</li>
+               </ol>
+               Result: <b>G – A – B – C – D – E – F♯ – G</b> (exact <b>1 sharp: F♯</b>).</div>
+               <div class="callout tip"><strong>Spelling rule</strong>In any 7-note scale each letter (C D E F G A B) appears exactly <b>once</b>. That is why the 7th note of G major is <b>F♯</b>, not G♭ (otherwise F would be missing and G would appear twice!).</div>`
         },
         widget: 'scales_basic'
       },
       {
         title: { de: 'Moll: Dur ab der 6. Stufe', en: 'Minor: Major from the 6th Degree' },
         body: {
-          de: `<p><b>Natürlich Moll</b> ist gar keine völlig neue Tonleiter: Starte einfach auf der <b>6. Stufe</b> einer Durtonleiter (oder gehe 3 Halbtöne nach unten). C-Dur ab A ergibt A [B] C D E F G A = <b>a-Moll</b>. Formel: <b>G H G G H G G</b>.</p>
+          de: `<p><b>Natürlich Moll</b> ist gar keine völlig neue Tonleiter: Starte einfach auf der <b>6. Stufe</b> einer Durtonleiter (oder gehe 3 Halbtöne nach unten). C-Dur ab A ergibt <code>A – [B] – C – D – E – F – G – A</code> = <b>a-Moll</b>. Dadurch verschiebt sich die Schrittfolge zur Moll-Formel: <b>G – H – G – G – H – G – G</b>.</p>
+               <div class="callout"><strong>Schritt für Schritt: So entsteht d-Moll (und warum F-Dur ein [B♭] hat!)</strong>
+               Wende die Moll-Formel <b>G – H – G – G – H – G – G</b> ab dem Ton <b>D</b> an:
+               <ol style="margin:6px 0 6px 18px;padding:0">
+                 <li><b>D → E</b> = Ganzton (<b>G</b> ✓)</li>
+                 <li><b>E → F</b> = Halbton (<b>H</b> ✓ – keine schwarze Taste zwischen E und F!)</li>
+                 <li><b>F → G</b> = Ganzton (<b>G</b> ✓)</li>
+                 <li><b>G → A</b> = Ganzton (<b>G</b> ✓)</li>
+                 <li><b>A → [B♭]</b> = Halbton (<b>H</b> ✓) – <em>Achtung!</em> Von A nach [B] wäre es ein Ganzton. Weil die Moll-Formel hier aber ein <b>H</b> verlangt, erniedrigen wir [B] um einen Halbton auf <b>[B♭]</b>! (Und es heißt [B♭], nicht A♯, weil das A schon vergeben ist.)</li>
+                 <li><b>[B♭] → C</b> = Ganzton (<b>G</b> ✓ – passt perfekt!)</li>
+                 <li><b>C → D</b> = Ganzton (<b>G</b> ✓ – zurück auf D!)</li>
+               </ol>
+               Ergebnis: <b>D – E – F – G – A – [B♭] – C – D</b> (genau <b>1 ♭-Vorzeichen: [B♭]</b>).<br>
+               <b>Die Brücke zu F-Dur:</b> Spielst du exakt dieselben 7 Töne einfach ab dem 3. Ton (<b>F</b>), erhältst du <b>F – G – A – [B♭] – C – D – E – F = F-Dur</b>! Deshalb teilen sich <b>F-Dur und d-Moll</b> genau dieses eine Vorzeichen <b>[B♭]</b>.</div>
                <div class="callout"><strong>Wichtiger Begriffsunterschied (DE vs. EN)</strong>
-               • <b>Relative Tonarten</b> (im Deutschen oft „Paralleltonarten“): gleiche Töne/Vorzeichen, anderer Grundton → C-Dur ↔ a-Moll.<br>
+               • <b>Relative Tonarten</b> (im Deutschen oft „Paralleltonarten“): gleiche Töne/Vorzeichen, anderer Grundton → C-Dur ↔ a-Moll, F-Dur ↔ d-Moll.<br>
                • <b>Gleichnamige Tonarten</b> (engl. <em>parallel keys</em>): gleicher Grundton, anderes Tongeschlecht → C-Dur ↔ c-Moll.</div>`,
-          en: `<p><b>Natural minor</b> is not a completely new scale: simply start on the <b>6th degree</b> of a major scale (3 semitones down). C major starting on A gives A B C D E F G A = <b>A minor</b>. Formula: <b>W H W W H W W</b>.</p>
+          en: `<p><b>Natural minor</b> is not a completely new scale: simply start on the <b>6th degree</b> of a major scale (3 semitones down). C major starting on A gives <code>A – B – C – D – E – F – G – A</code> = <b>A minor</b>, shifting the step pattern to the minor formula: <b>W – H – W – W – H – W – W</b>.</p>
+               <div class="callout"><strong>Step by step: Building D minor (and why F major has a B♭!)</strong>
+               Apply the minor formula <b>W – H – W – W – H – W – W</b> starting on <b>D</b>:
+               <ol style="margin:6px 0 6px 18px;padding:0">
+                 <li><b>D → E</b> = Whole tone (<b>W</b> ✓)</li>
+                 <li><b>E → F</b> = Half step (<b>H</b> ✓ — no black key between E and F!)</li>
+                 <li><b>F → G</b> = Whole tone (<b>W</b> ✓)</li>
+                 <li><b>G → A</b> = Whole tone (<b>W</b> ✓)</li>
+                 <li><b>A → B♭</b> = Half step (<b>H</b> ✓) — <em>Watch out!</em> A to B is a whole tone, so to get the required <b>H</b> we lower B by a semitone to <b>B♭</b>! (Named B♭, not A♯, so every letter appears once.)</li>
+                 <li><b>B♭ → C</b> = Whole tone (<b>W</b> ✓)</li>
+                 <li><b>C → D</b> = Whole tone (<b>W</b> ✓)</li>
+               </ol>
+               Result: <b>D – E – F – G – A – B♭ – C – D</b> (exact <b>1 flat: B♭</b>).<br>
+               <b>The bridge to F major:</b> Start those exact same 7 notes on the 3rd note (<b>F</b>) and you get <b>F – G – A – B♭ – C – D – E – F = F major</b>! That is why <b>F major and D minor</b> share that single flat <b>B♭</b>.</div>
                <div class="callout"><strong>Relative vs. Parallel keys</strong>
-               • <b>Relative keys</b> share the same notes and key signature (C major ↔ A minor).<br>
+               • <b>Relative keys</b> share the same notes and key signature (C major ↔ A minor, F major ↔ D minor).<br>
                • <b>Parallel keys</b> share the same root but change mode (C major ↔ C minor).</div>`
         },
         examples: [
@@ -159,11 +235,12 @@
       {
         title: { de: 'Harmonisch & Melodisch Moll', en: 'Harmonic & Melodic Minor' },
         transposeBody: true,
+        minorBody: true,
         body: {
           de: `<p>Im natürlichen Moll liegt die 7. Stufe einen ganzen Ton unter dem Grundton – es fehlt der starke <b>Leitton</b>. Deshalb nutzt die Musik zwei Varianten:</p>
                <ul>
                  <li><b>Harmonisch Moll:</b> Die 7. Stufe wird um einen Halbton erhöht (in c-Moll: [B] statt [B♭]). Dadurch wird die 5. Stufe zum Dur-Dominantakkord (<b>V7</b>), der zwingend zur Tonika zieht! Zwischen 6. und 7. Stufe entsteht ein Schritt von 1½ Tönen (übermäßige Sekunde).</li>
-                 <li><b>Melodisch Moll (aufwärts):</b> Erhöht zusätzlich die 6. Stufe (A statt A♭), um diesen 1½-Ton-Sprung in Melodien zu glätten.</li>
+                 <li><b>Melodisch Moll (aufwärts ↑ / abwärts ↓):</b> Erhöht <b>aufwärts</b> zusätzlich die 6. Stufe (A statt A♭), um diesen 1½-Ton-Sprung in Melodien zu glätten. <b>Wichtig:</b> Diese Form wird meist nur <b>aufsteigend</b> verwendet (wenn die Melodie zum Leitton und Grundton strebt) – <b>absteigend</b> werden die 7. und 6. Stufe wieder zurückgenommen ([B♭] und A♭), sodass man wieder <b>natürliches Moll</b> spielt! <em>(Ausnahme: Im modernen Jazz wird oft auf- wie abwärts die aufsteigende Form als „Jazz Minor“ verwendet.)</em></li>
                </ul>
                <div class="callout tip"><strong>Spannende „exotische“ Stufenakkorde in harmonisch &amp; melodisch Moll!</strong>
                Durch die erhöhten Töne entstehen beim Terzenstapeln ganz neue, farbige Dreiklänge, die es in Dur und natürlich Moll gar nicht gibt:
@@ -175,7 +252,7 @@
           en: `<p>In natural minor the 7th degree sits a whole tone below the tonic — there is no strong <b>leading tone</b>. Music therefore uses two variants:</p>
                <ul>
                  <li><b>Harmonic minor:</b> Raises the 7th degree by a semitone (in C minor: B instead of B♭). This turns V into a major dominant chord (<b>V7</b>) with strong pull back to i, creating a 1½-tone leap between degrees 6 and 7.</li>
-                 <li><b>Melodic minor (ascending):</b> Also raises the 6th degree (A instead of A♭) to smooth out that melodic leap.</li>
+                 <li><b>Melodic minor (ascending ↑ / descending ↓):</b> Also raises the 6th degree <b>ascending</b> (A instead of A♭) to smooth out that melodic leap. <b>Important:</b> In classical music this raised form is used mainly <b>going up</b> (pulling toward the tonic) — <b>descending</b>, the 7th and 6th degrees revert (B♭ and A♭), returning to <b>natural minor</b>! <em>(Exception: Modern jazz often uses the ascending “jazz minor” form in both directions.)</em></li>
                </ul>
                <div class="callout tip"><strong>“Exotic” diatonic chords born from harmonic &amp; melodic minor!</strong>
                Stacking thirds on these altered scales naturally creates striking triads that never occur in major or natural minor:
@@ -208,7 +285,7 @@
           },
           {
             title: { de: 'Harmonisch Moll in Aktion: Dur-V mit Leitton', en: 'Harmonic minor in action: Major V with leading tone' },
-            toks: 'i iv V7 i',
+            toks: 'i:2 iv:1 V7:1 i:4',
             mode: 'min',
             transpose: true,
             relHint: true,
@@ -267,19 +344,41 @@
           const r1 = T.fmtNote(T.spellInKey(key, 0, 0));
           const r3 = T.fmtNote(T.spellInKey(key, 4, 2));
           const r5 = T.fmtNote(T.spellInKey(key, 7, 4));
+          const s5 = T.fmtNote(T.spellInKey(key, 8, 4));
+          const b3 = T.fmtNote(T.spellInKey(key, 3, 2));
+          const b5 = T.fmtNote(T.spellInKey(key, 6, 4));
+          const d7 = T.fmtNote(T.spellInKey(key, 9, 5));
           return {
-            de: `<p>Drehst du die Reihenfolge der Töne eines <b>${r1}-Dur-Dreiklangs</b> um, bleibt es derselbe Akkord, aber der <b>Basston</b> ändert sich:</p>
+            de: `<p>Drehst du die Reihenfolge der Töne eines <b>${r1}-Dur-Dreiklangs</b> um, bleiben es <b>exakt dieselben drei Töne</b> (${r1}, ${r3}, ${r5}), aber ein anderer Ton liegt als <b>neuer tiefster Ton im Bass</b>:</p>
                  <ul>
-                   <li><b>Grundstellung:</b> Grundton im Bass (<b>${r1} – ${r3} – ${r5}</b>). Stabil und eindeutig.</li>
-                   <li><b>1. Umkehrung (Sextakkord, ⁶):</b> Terz im Bass (<b>${r3} – ${r5} – ${r1}</b>, Schreibweise <code>${r1}/${r3}</code>). Über dem Bass liegen Terz und Sexte. Klingt weicher und verbindet Akkorde melodisch.</li>
-                   <li><b>2. Umkehrung (Quartsextakkord, ⁶₄):</b> Quinte im Bass (<b>${r5} – ${r1} – ${r3}</b>, Schreibweise <code>${r1}/${r5}</code>). Über dem Bass liegen Quarte und Sexte – die Quarte erzeugt Spannung Richtung Terz (typisch vor dem Schluss: <code>I⁶₄ – V – I</code>).</li>
-                 </ul>`,
-            en: `<p>Rearranging the notes of a <b>${r1} major triad</b> keeps the same chord identity, but changes the <b>bass note</b>:</p>
+                   <li><b>Grundstellung (<code>⁵₃</code>):</b> Grundton <b>${r1}</b> im Bass (<b>${r1} – ${r3} – ${r5}</b>). Ab ${r1} nach oben liegen Terz (${r3}) und Quinte (${r5}). Stabil und eindeutig.</li>
+                   <li><b>1. Umkehrung (Sextakkord, <code>⁶</code>):</b> Terz <b>${r3}</b> als neuer Basston (<b>${r3} – ${r5} – ${r1}</b>, Schreibweise <code>${r1}/${r3}</code>). Zählst du ab dem <em>neuen</em> Basston <b>${r3}</b> aufwärts, liegen darüber eine Terz (${r3} → ${r5}) und eine <b>Sexte (${r3} → ${r1})</b> – daher der Name <em>Sextakkord</em>! Klingt weicher und verbindet Akkorde melodisch.</li>
+                   <li><b>2. Umkehrung (Quartsextakkord, <code>⁶₄</code>):</b> Quinte <b>${r5}</b> als neuer Basston (<b>${r5} – ${r1} – ${r3}</b>, Schreibweise <code>${r1}/${r5}</code>). Zählst du ab dem <em>neuen</em> Basston <b>${r5}</b> aufwärts, liegen darüber eine <b>Quarte (${r5} → ${r1})</b> und eine <b>Sexte (${r5} → ${r3})</b> – daher der Name <em>Quartsextakkord</em>! Die Quarte über dem Bass wirkt wie ein Vorhalt Richtung Terz (typisch vor dem Schluss: <code>I⁶₄ – V – I</code>).</li>
+                 </ul>
+                 <div class="callout tip"><strong>Häufiges Missverständnis – wichtig für die Praxis!</strong>
+                 Die Namen <em>„Sextakkord“</em> und <em>„Quartsextakkord“</em> bedeuten <b>nicht</b>, dass eine Quarte oder Sexte als neuer Ton zum ${r1}-Dur-Akkord dazukommt (das wären <code>${r1}sus4</code> oder <code>${r1}6</code>)! Die Ziffern <code>⁶</code> und <code>⁶₄</code> stammen aus dem Generalbass und messen die Intervalle <b>immer vom neuen, tiefsten Basston aus nach oben</b> – beim Quartsextakkord <code>${r1}/${r5}</code> ist die „Quarte“ schlicht der Abstand vom Bass <b>${r5}</b> hinauf zum eigentlichen Grundton <b>${r1}</b>!</div>
+                 <div class="callout"><strong>Symmetrie-Zauber bei Übermäßig (<code>+</code>) &amp; Vollvermindert (<code>°7</code>)</strong>
+                 Während Dur- und Moll-Umkehrungen völlig anders klingen, teilen zwei Akkordtypen die Oktave (12 Halbtöne) in <b>exakt gleiche Abstände</b>:
                  <ul>
-                   <li><b>Root position:</b> root in the bass (<b>${r1} – ${r3} – ${r5}</b>). Stable and grounded.</li>
-                   <li><b>1st inversion (sixth chord, ⁶):</b> third in the bass (<b>${r3} – ${r5} – ${r1}</b>, written <code>${r1}/${r3}</code>). Softer and ideal for smooth bass lines.</li>
-                   <li><b>2nd inversion (six-four chord, ⁶₄):</b> fifth in the bass (<b>${r5} – ${r1} – ${r3}</b>, written <code>${r1}/${r5}</code>). The fourth above the bass wants to resolve downward (often used as <code>I⁶₄ – V – I</code>).</li>
-                 </ul>`
+                   <li><b>Übermäßig (<code>+</code>):</b> 4 + 4 + 4 Halbtöne (drei große Terzen). Jede Umkehrung von <code>${r1}+</code> (<b>${r1} – ${r3} – ${s5}</b>) ist klanglich wieder ein übermäßiger Dreiklang in Grundstellung: <code>${r1}+ = ${r3}+ = ${s5}+</code>! Es gibt im gesamten System nur <b>4 verschiedene</b> übermäßige Dreiklänge.</li>
+                   <li><b>Vollvermindert (<code>°7</code>):</b> 3 + 3 + 3 + 3 Halbtöne (vier kleine Terzen). Jede Umkehrung von <code>${r1}°7</code> (<b>${r1} – ${b3} – ${b5} – ${d7}</b>) ist wieder derselbe Akkord: <code>${r1}°7 = ${b3}°7 = ${b5}°7 = ${d7}°7</code>! Es gibt also nur <b>3 verschiedene</b> vollverminderte Septakkorde!</li>
+                 </ul>
+                 Höre dir unten die Umkehrungen von <code>${r1}+</code> und <code>${r1}°7</code> direkt im Vergleich an!</div>`,
+            en: `<p>Rearranging the notes of a <b>${r1} major triad</b> keeps the <b>exact same three pitches</b> (${r1}, ${r3}, ${r5}), but puts a different note at the bottom as the <b>new lowest bass note</b>:</p>
+                 <ul>
+                   <li><b>Root position (<code>⁵₃</code>):</b> root <b>${r1}</b> in the bass (<b>${r1} – ${r3} – ${r5}</b>). Measuring up from ${r1} gives a 3rd (${r3}) and 5th (${r5}). Stable and grounded.</li>
+                   <li><b>1st inversion (sixth chord, <code>⁶</code>):</b> third <b>${r3}</b> becomes the new bass note (<b>${r3} – ${r5} – ${r1}</b>, written <code>${r1}/${r3}</code>). Measuring up from the <em>new</em> bass <b>${r3}</b> gives a 3rd (${r3} → ${r5}) and a <b>6th (${r3} → ${r1})</b> — hence <em>sixth chord</em>!</li>
+                   <li><b>2nd inversion (six-four chord, <code>⁶₄</code>):</b> fifth <b>${r5}</b> becomes the new bass note (<b>${r5} – ${r1} – ${r3}</b>, written <code>${r1}/${r5}</code>). Measuring up from the <em>new</em> bass <b>${r5}</b> gives a <b>4th (${r5} → ${r1})</b> and a <b>6th (${r5} → ${r3})</b> — hence <em>six-four chord</em>! The fourth above the bass wants to resolve downward (<code>I⁶₄ – V – I</code>).</li>
+                 </ul>
+                 <div class="callout tip"><strong>Common pitfall — don’t mix these up!</strong>
+                 <em>“Sixth chord”</em> and <em>“six-four chord”</em> do <b>not</b> add a 4th or 6th to ${r1} major (that would be <code>${r1}sus4</code> or <code>${r1}6</code>)! Those figured-bass numbers (<code>⁶</code>, <code>⁶₄</code>) <b>always measure intervals upward from the new lowest bass note</b> — in <code>${r1}/${r5}</code>, the “fourth” is simply the distance from the bass <b>${r5}</b> up to the chord’s true root <b>${r1}</b>!</div>
+                 <div class="callout"><strong>Symmetrical magic: Augmented (<code>+</code>) &amp; Fully Diminished (<code>°7</code>)</strong>
+                 Unlike major and minor triads, two chord types divide the 12-semitone octave into <b>perfectly equal slices</b>:
+                 <ul>
+                   <li><b>Augmented (<code>+</code>):</b> 4 + 4 + 4 semitones (major thirds). Every inversion of <code>${r1}+</code> (<b>${r1} – ${r3} – ${s5}</b>) sounds like another root-position augmented triad: <code>${r1}+ = ${r3}+ = ${s5}+</code>! Only <b>4 distinct</b> augmented triads exist in all of music.</li>
+                   <li><b>Fully diminished (<code>°7</code>):</b> 3 + 3 + 3 + 3 semitones (minor thirds). Every inversion of <code>${r1}°7</code> (<b>${r1} – ${b3} – ${b5} – ${d7}</b>) is the exact same chord: <code>${r1}°7 = ${b3}°7 = ${b5}°7 = ${d7}°7</code>! Only <b>3 distinct</b> diminished 7th chords exist!</li>
+                 </ul>
+                 Hear the inversions of <code>${r1}+</code> and <code>${r1}°7</code> below!</div>`
           };
         },
         examples: [
@@ -291,6 +390,26 @@
             desc: {
               de: 'C – C/E – C/G – C: Achte im Live-View auf den gelben Basston und das Klaviersystem – der Bass wandert, der Akkord bleibt C-Dur.',
               en: 'C – C/E – C/G – C: Watch the amber bass note and grand staff in the Live View — the bass moves while the chord stays C major.'
+            }
+          },
+          {
+            title: { de: 'Symmetrie erleben: Übermäßiger Dreiklang in allen 3 Lagen (I+)', en: 'Symmetry in action: Augmented triad in all 3 inversions (I+)' },
+            toks: 'I+ I+^1 I+^2 I+',
+            mode: 'maj',
+            transpose: true,
+            desc: {
+              de: 'C+ – C+/E (= E+) – C+/G♯ (= A♭+) – C+: Jede Umkehrung hat exakt denselben 4+4-Abstand – schwebend und völlig symmetrisch!',
+              en: 'C+ – C+/E (= E+) – C+/G♯ (= A♭+) – C+: Every inversion keeps the exact same 4+4 spacing — floating and symmetrical!'
+            }
+          },
+          {
+            title: { de: 'Symmetrie erleben: Vollvermindert (°7) in allen 4 Umkehrungen', en: 'Symmetry in action: Diminished 7th (°7) in all 4 inversions' },
+            toks: 'I°7 I°7^1 I°7^2 I°7^3',
+            mode: 'maj',
+            transpose: true,
+            desc: {
+              de: 'C°7 – C°7/E♭ (= E♭°7) – C°7/G♭ (= F♯°7) – C°7/A (= A°7): Alle 4 Umkehrungen bilden exakt dieselbe 3+3+3-Struktur!',
+              en: 'C°7 – C°7/E♭ (= E♭°7) – C°7/G♭ (= F♯°7) – C°7/A (= A°7): All 4 inversions form the exact same 3+3+3 spacing!'
             }
           }
         ],
@@ -396,7 +515,7 @@
           },
           {
             title: { de: 'Mit Stellvertretern: I – vi – ii – V – I', en: 'With relative stand-ins: I – vi – ii – V – I' },
-            toks: 'I vi ii V I',
+            toks: 'I:2 vi:2 ii:1 V:1 I:2',
             mode: 'maj',
             transpose: true,
             desc: {
@@ -406,7 +525,7 @@
           },
           {
             title: { de: 'Jazz-Spannung: Dominante mit ♭9 (V7♭9)', en: 'Jazz tension: Dominant with ♭9 (V7♭9)' },
-            toks: 'I ii7 V7b9 Imaj7',
+            toks: 'I:2 ii7:1 V7b9:1 Imaj7:4',
             mode: 'maj',
             transpose: true,
             desc: {
@@ -416,7 +535,7 @@
           },
           {
             title: { de: 'Jazz-Spannung: Übermäßige Dominante (V+7 / V7♯5)', en: 'Jazz tension: Augmented dominant (V+7 / V7♯5)' },
-            toks: 'I ii7 V+7 Imaj7',
+            toks: 'I:2 ii7:1 V+7:1 Imaj7:4',
             mode: 'maj',
             transpose: true,
             desc: {
@@ -449,30 +568,57 @@
     units: [
       {
         title: { de: 'Eine universelle Sprache für alle 12 Tonarten', en: 'One Universal Language for All 12 Keys' },
-        body: {
-          de: `<p>Statt für jede Tonart neue Akkorde auswendig zu lernen, beschreiben Musiker Akkordfolgen mit <b>römischen Zahlen</b>:</p>
-               <ul>
-                 <li><b>Zahl (I bis VII):</b> Tonleiterstufe, auf der der Akkord steht (I = 1. Ton, V = 5. Ton).</li>
-                 <li><b>Groß = Dur</b> (<code>I</code>, <code>IV</code>, <code>V</code>), <b>klein = Moll</b> (<code>ii</code>, <code>vi</code>).</li>
-                 <li><b>Qualität & Zusätze:</b> <code>°</code> = vermindert, <code>ø</code> = halbvermindert, <code>+</code> = übermäßig, Ziffern wie <code>V7</code>, <code>Imaj7</code>, <code>Isus4</code>.</li>
-                 <li><b>Vorzeichen davor:</b> <code>♭VII</code> = Dur-Akkord auf der erniedrigten 7. Stufe (in C: [B♭]).</li>
-                 <li><b>Schrägstrich (/):</b> „von“ – z. B. <code>V7/vi</code> = die Dominante <em>von</em> vi.</li>
-               </ul>
-               <div class="callout tip"><strong>Probiere es direkt aus!</strong>Stelle oben in der Kopfzeile eine andere <b>Tonart</b> ein (z. B. G, D oder E♭) – die römischen Stufen bleiben gleich, die Akkordnamen passen sich sofort an!</div>`,
-          en: `<p>Instead of memorizing separate chords for every key, musicians describe progressions with <b>Roman numerals</b>:</p>
-               <ul>
-                 <li><b>Numeral (I–VII):</b> scale degree of the chord root (I = 1st note, V = 5th note).</li>
-                 <li><b>Uppercase = Major</b> (<code>I</code>, <code>IV</code>, <code>V</code>), <b>lowercase = Minor</b> (<code>ii</code>, <code>vi</code>).</li>
-                 <li><b>Quality & extensions:</b> <code>°</code> = diminished, <code>ø</code> = half-diminished, <code>+</code> = augmented, plus numbers like <code>V7</code>, <code>Imaj7</code>, <code>Isus4</code>.</li>
-                 <li><b>Accidental in front:</b> <code>♭VII</code> = major chord on the lowered 7th degree (in C: B♭).</li>
-                 <li><b>Slash (/):</b> “of” — e.g. <code>V7/vi</code> = the dominant <em>of</em> vi.</li>
-               </ul>
-               <div class="callout tip"><strong>Try it right now!</strong>Change the <b>Key</b> in the top bar (e.g. G, D, or E♭) — the Roman numerals stay identical while all chord names transpose automatically.</div>`
+        body: key => {
+          const T = MT.theory;
+          const kMaj = T.fmtNote(T.spellInKey(key, 0, 0));
+          const c1 = T.parseChord('I', key, 'maj').name;
+          const c2 = T.parseChord('ii', key, 'maj').name;
+          const c4 = T.parseChord('IV', key, 'maj').name;
+          const c5 = T.parseChord('V', key, 'maj').name;
+          const c6 = T.parseChord('vi', key, 'maj').name;
+          const cb7 = T.parseChord('bVII', key, 'maj').name;
+          const v7vi = T.parseChord('V7/vi', key, 'maj').name;
+
+          // Relative minor comparison for the Golden Rule (e.g. C / Am -> a-Moll vs A-Dur)
+          const minKey = T.relativeMinorKey(key);
+          const kMin = T.fmtNote(T.spellInKey(key, 9, 5));
+          const m3 = T.fmtNote(T.spellInKey(minKey, 3, 2));
+          const m6 = T.fmtNote(T.spellInKey(minKey, 8, 5));
+          const m7 = T.fmtNote(T.spellInKey(minKey, 10, 6));
+          const maj3 = T.fmtNote(T.spellInKey(minKey, 4, 2));
+          const maj6 = T.fmtNote(T.spellInKey(minKey, 9, 5));
+          const maj7 = T.fmtNote(T.spellInKey(minKey, 11, 6));
+          const minLower = kMin.charAt(0).toLowerCase() + kMin.slice(1);
+
+          return {
+            de: `<p>Statt für jede Tonart neue Akkorde auswendig zu lernen, beschreiben Musiker Akkordfolgen mit <b>römischen Zahlen</b> (hier direkt für deine gewählte Tonart <b>${kMaj}-Dur / ${minLower}-Moll</b>):</p>
+                 <ul>
+                   <li><b>Zahl (I bis VII):</b> Tonleiterstufe, auf der der Akkord steht (<code>I</code> = ${c1}, <code>V</code> = ${c5}).</li>
+                   <li><b>Groß = Dur</b> (<code>I</code> = ${c1}, <code>IV</code> = ${c4}, <code>V</code> = ${c5}), <b>klein = Moll</b> (<code>ii</code> = ${c2}, <code>vi</code> = ${c6}).</li>
+                   <li><b>Qualität &amp; Zusätze:</b> <code>°</code> = vermindert, <code>ø</code> = halbvermindert, <code>+</code> = übermäßig, Ziffern wie <code>V7</code> (${c5}7), <code>Imaj7</code> (${c1}maj7), <code>Isus4</code> (${c1}sus4).</li>
+                   <li><b>Vorzeichen davor:</b> <code>♭VII</code> = Dur-Akkord auf der erniedrigten 7. Stufe (in ${kMaj}-Dur: <b>${cb7}</b>).</li>
+                   <li><b>Schrägstrich (/):</b> „von“ – z. B. <code>V7/vi</code> = die Dominante <em>von</em> <code>vi</code> (in ${kMaj}-Dur: <b>${v7vi}</b> → ${c6}).</li>
+                 </ul>
+                 <div class="callout"><strong>Goldene Regel: Immer die Durtonleiter als Maßstab!</strong>
+                 Die Nummerierung <code>I – II – III – IV – V – VI – VII</code> folgt in der modernen Pop-, Rock- und Jazz-Theorie <b>immer der Durtonleiter</b> (<code>1 2 3 4 5 6 7</code>) als festem Bezugssystem. Deshalb bekommen leitereigene Moll-Stufen auf der 3., 6. und 7. Stufe ein <code>♭</code> davor (<b><code>♭III</code>, <code>♭VI</code>, <code>♭VII</code></b>): In <b>${minLower}-Moll</b> sind <b>${m3}, ${m6} und ${m7}</b> gegenüber <b>${kMin}-Dur (${maj3}, ${maj6}, ${maj7})</b> jeweils einen Halbton tiefer – genau das macht das <code>♭</code> sofort sichtbar!</div>
+                 <div class="callout tip"><strong>Probiere es direkt aus!</strong>Stelle oben in der Kopfzeile eine andere <b>Tonart</b> ein – die römischen Stufen bleiben gleich, alle Akkordnamen oben und in den Beispielen passen sich sofort an!</div>`,
+            en: `<p>Instead of memorizing separate chords for every key, musicians describe progressions with <b>Roman numerals</b> (shown live for your selected key <b>${kMaj} major / ${kMin} minor</b>):</p>
+                 <ul>
+                   <li><b>Numeral (I–VII):</b> scale degree of the chord root (<code>I</code> = ${c1}, <code>V</code> = ${c5}).</li>
+                   <li><b>Uppercase = Major</b> (<code>I</code> = ${c1}, <code>IV</code> = ${c4}, <code>V</code> = ${c5}), <b>lowercase = Minor</b> (<code>ii</code> = ${c2}, <code>vi</code> = ${c6}).</li>
+                   <li><b>Quality &amp; extensions:</b> <code>°</code> = diminished, <code>ø</code> = half-diminished, <code>+</code> = augmented, plus numbers like <code>V7</code> (${c5}7), <code>Imaj7</code> (${c1}maj7), <code>Isus4</code> (${c1}sus4).</li>
+                   <li><b>Accidental in front:</b> <code>♭VII</code> = major chord on the lowered 7th degree (in ${kMaj} major: <b>${cb7}</b>).</li>
+                   <li><b>Slash (/):</b> “of” — e.g. <code>V7/vi</code> = the dominant <em>of</em> <code>vi</code> (in ${kMaj} major: <b>${v7vi}</b> → ${c6}).</li>
+                 </ul>
+                 <div class="callout"><strong>Golden rule: Always measured against the major scale!</strong>
+                 In modern pop, rock, and jazz theory, Roman numeral numbering (<code>I–II–III–IV–V–VI–VII</code>) <b>always uses the major scale</b> as its fixed ruler. That is why even diatonic chords in natural minor carry a flat on degrees 3, 6, and 7 (<b><code>♭III</code>, <code>♭VI</code>, <code>♭VII</code></b>): in <b>${kMin} minor</b>, <b>${m3}, ${m6}, and ${m7}</b> sit a semitone lower than in <b>${kMin} major (${maj3}, ${maj6}, ${maj7})</b>.</div>
+                 <div class="callout tip"><strong>Try it right now!</strong>Change the <b>Key</b> in the top bar — the Roman numerals stay identical while all chord names above and below transpose automatically.</div>`
+          };
         },
         examples: [
           {
             title: { de: 'Bunte Mischung zum Ablesen', en: 'Mixed symbols to read and hear' },
-            toks: 'I iii IV iv bVII I',
+            toks: 'I:2 iii:2 IV:2 iv:1 bVII:1 I:4',
             mode: 'maj',
             transpose: true,
             desc: {
@@ -506,6 +652,7 @@
       {
         title: { de: 'Natürlich Moll: Offen, episch & rockig', en: 'Natural Minor: Open, Epic & Rock' },
         transposeBody: true,
+        minorBody: true,
         body: {
           de: `<p>Moll-Songs nutzen fast immer eine <b>Mischung</b> aus natürlichem Moll (ohne Leitton) und harmonischem Moll (mit Leitton).</p>
                <p>Im <b>natürlichen Moll</b> stehen auf der 6. und 7. Stufe starke Dur-Akkorde (<b><code>♭VI</code></b> und <b><code>♭VII</code></b> – in der modernen Pop-/Jazz-Schreibweise mit <code>♭</code> notiert, weil sie gegenüber der Durtonleiter einen Halbton tiefer liegen; in klassischer Musiktheorie schreibt man sie oft einfach <code>VI</code> und <code>VII</code>).</p>
@@ -519,7 +666,7 @@
         examples: [
           {
             title: { de: 'Epische Moll-Wendung: i – ♭VI – ♭VII – i', en: 'Epic minor progression: i – ♭VI – ♭VII – i' },
-            toks: 'i bVI bVII i',
+            toks: 'i:2 bVI:1 bVII:1 i:4',
             mode: 'min',
             transpose: true,
             relHint: true,
@@ -544,6 +691,7 @@
       {
         title: { de: 'Harmonisch Moll & die Andalusische Kadenz', en: 'Harmonic Minor & the Andalusian Cadence' },
         transposeBody: true,
+        minorBody: true,
         body: {
           de: `<p>Sobald eine Moll-Folge echte <b>Schlusswirkung</b> oder Dramatik braucht, wechselt die 5. Stufe von <code>v</code> (Moll) zu <b><code>V</code> bzw. <code>V7</code> (Dur)</b> aus harmonisch Moll.</p>
                <p>Ein weltberühmtes Beispiel für die Kombination aus beidem ist die <b>Andalusische Kadenz</b> <code>i – ♭VII – ♭VI – V</code>: Erst fällt der Bass schrittweise durch natürlich Moll, und am Ende zündet die Dur-Dominante <code>V</code>!</p>
@@ -566,7 +714,7 @@
           },
           {
             title: { de: 'Klassische Moll-Kadenz mit Leitton', en: 'Classic minor cadence with leading tone' },
-            toks: 'i iv V7 i',
+            toks: 'i:2 iv:1 V7:1 i:4',
             mode: 'min',
             transpose: true,
             relHint: true,
@@ -621,14 +769,14 @@
         examples: [
           {
             title: { de: 'Vollkadenz (T – S – D – T)', en: 'Full cadence (T – S – D – T)' },
-            toks: 'I IV V7 I',
+            toks: 'I:2 IV:1 V7:1 I:4',
             mode: 'maj',
             transpose: true,
-            desc: { de: 'C – F – G7 – C: Klarer Aufbau von Spannung und Auflösung.', en: 'C – F – G7 – C: Clear build-up and release of tension.' }
+            desc: { de: 'C – F – G7 – C: Klarer Aufbau von Spannung und Auflösung. Vergleiche unbedingt Grundstellung vs. Stimmführung (Start Grundstellung / 1. / 2. Umkehrung) – die Oberstimme verändert den Schlusscharakter deutlich!', en: 'C – F – G7 – C: Clear build-up and release of tension. Be sure to compare Root Position vs. Voice Leading (Start Root / 1st / 2nd inversion) — the top note noticeably changes the cadence’s mood!' }
           },
           {
             title: { de: 'Plagalschluss („Amen“)', en: 'Plagal cadence (“Amen”)' },
-            toks: 'I IV I',
+            toks: 'I:2 IV:2 I:4',
             mode: 'maj',
             transpose: true,
             desc: { de: 'C – F – C: Warm und entspannt, ohne Leitton-Druck.', en: 'C – F – C: Warm and relaxed, without leading-tone pull.' }
@@ -642,7 +790,7 @@
           },
           {
             title: { de: 'Trugschluss und anschließende Auflösung', en: 'Deceptive cadence followed by real resolution' },
-            toks: 'I IV V7 vi ii V7 I',
+            toks: 'I:2 IV:1 V7:1 vi:2 ii:1 V7:1 I:4',
             mode: 'maj',
             transpose: true,
             desc: { de: 'C – F – G7 – Am (Überraschung!) – Dm – G7 – C (jetzt der echte Schluss).', en: 'C – F – G7 – Am (surprise!) – Dm – G7 – C (now the true resolution).' }
@@ -654,7 +802,7 @@
         transposeBody: true,
         body: {
           de: `<h4>Der Kadenzquartsextakkord (I⁶₄ – V – I)</h4>
-               <p>In der Klassik (und vielen Balladen) wird vor die Dominante gern die <b>2. Umkehrung der Tonika</b> gesetzt (<code>I⁶₄</code>, z. B. <code>C/G → G7 → C</code>). Der Bass steht schon auf G, während darüber C und E noch „hängen“ und erst beim G7 in [B] und D kippen.</p>
+               <p>In der Klassik (und vielen Balladen) wird vor die Dominante gern die <b>2. Umkehrung der Tonika</b> gesetzt (<code>I⁶₄</code>, z. B. <code>C/G → G7 → C</code>). Der Bass steht schon auf G – von diesem Basston G aus gemessen liegen darüber die <b>Quarte C</b> und die <b>Sexte E</b> (daher <code>⁶₄</code>), die noch kurz „hängen“ und erst beim G7 abwärts in Terz ([B]) und Quinte (D) kippen.</p>
                <h4>Harmonischer Rhythmus (Wann wechseln Akkorde?)</h4>
                <p>Als <b>harmonischen Rhythmus</b> bezeichnet man das Tempo, in dem Akkorde wechseln:</p>
                <ul>
@@ -663,7 +811,7 @@
                </ul>
                <div class="callout tip"><strong>Tipp fürs Übungstool</strong>Probiere dieselbe Progression im Übungstool einmal mit <b>4 Schlägen/Akkord</b> und einmal mit <b>2 Schlägen/Akkord</b> – sofort ändert sich das gesamte Energiegefühl!</div>`,
           en: `<h4>The Cadential Six-Four (I⁶₄ – V – I)</h4>
-               <p>In classical music and ballads, the <b>2nd inversion of the tonic</b> (<code>I⁶₄</code>, e.g. <code>C/G → G7 → C</code>) often precedes the dominant. The bass already sits on G while C and E suspend above before resolving down to B and D.</p>
+               <p>In classical music and ballads, the <b>2nd inversion of the tonic</b> (<code>I⁶₄</code>, e.g. <code>C/G → G7 → C</code>) often precedes the dominant. The bass already sits on G — measured up from that bass note G, C is a <b>4th</b> and E is a <b>6th</b> (hence <code>⁶₄</code>), suspending briefly before resolving down to B and D over G7.</p>
                <h4>Harmonic Rhythm (When do chords change?)</h4>
                <p><b>Harmonic rhythm</b> is the pace at which chords change:</p>
                <ul>
@@ -675,7 +823,7 @@
         examples: [
           {
             title: { de: 'Kadenzquartsext: I – IV – I⁶₄ – V7 – I', en: 'Cadential six-four: I – IV – I⁶₄ – V7 – I' },
-            toks: 'I IV I^2 V7 I',
+            toks: 'I:2 IV:2 I^2:1 V7:1 I:2',
             mode: 'maj',
             transpose: true,
             desc: { de: 'C – F – C/G – G7 – C: Beachte im Bass die Linie C – F – G – G – C.', en: 'C – F – C/G – G7 – C: Notice the bass line C – F – G – G – C.' }
@@ -724,7 +872,7 @@
         examples: [
           {
             title: { de: 'Der Tritonus als Motor der Spannung', en: 'The tritone as the engine of tension' },
-            toks: 'V7 I',
+            toks: 'V7:2 I:4',
             mode: 'maj',
             transpose: true,
             desc: {
@@ -766,10 +914,14 @@
         body: {
           de: `<p>Noten liegen auf <b>5 Linien</b> und in <b>4 Zwischenräumen</b>. Der <b>Violinschlüssel (𝄞)</b> heißt auch <b>G-Schlüssel</b>, weil seine Spirale die 2. Linie von unten als <b>G4</b> markiert.</p>
                <p><b>Merksätze:</b> Linien von unten: <b>E – G – [B] – D – F</b> (<em>„Es geht hurtig durch Fluren“</em> / <em>„Every Good Boy Does Fine“</em>). Zwischenräume: <b>F – A – C – E</b> (das englische Wort <b>FACE</b>).</p>
-               <p><b>Vorzeichen:</b> <b>♯</b> erhöht um einen Halbton, <b>♭</b> erniedrigt, <b>♮</b> hebt auf. Vorzeichen direkt am Zeilenanfang gelten für das ganze Stück.</p>`,
+               <p><b>Vorzeichen:</b> <b>♯</b> erhöht um einen Halbton, <b>♭</b> erniedrigt, <b>♮</b> hebt auf. Vorzeichen direkt am Zeilenanfang gelten für das ganze Stück.</p>
+               <div class="callout"><strong>Enharmonische Verwechslung – zwei Schreibweisen, ein Ton!</strong>
+               Im Notenbild können zwei Töne auf <b>unterschiedlichen Linien oder Zwischenräumen</b> stehen (z. B. <b>F♯</b> im 1. Zwischenraum vs. <b>G♭</b> auf der 2. Linie, oder sogar <b>E♯</b> vs. <b>F</b>) – auf Klavier und Gitarre drückst du aber <b>exakt dieselbe Taste bzw. denselben Bund</b>! Welche Schreibweise richtig ist, entscheidet die Tonart (damit jeder Stammton-Buchstabe in einer Tonleiter genau einmal vorkommt).</div>`,
           en: `<p>Notes sit on <b>5 lines</b> and <b>4 spaces</b>. The <b>treble clef (𝄞)</b> is also called the <b>G clef</b> because its spiral circles the 2nd line from the bottom as <b>G4</b>.</p>
                <p><b>Mnemonics:</b> Lines from bottom: <b>E – G – B – D – F</b> (<em>“Every Good Boy Does Fine”</em>). Spaces: <b>F – A – C – E</b> (spells <b>FACE</b>).</p>
-               <p><b>Accidentals:</b> <b>♯</b> raises a semitone, <b>♭</b> lowers, <b>♮</b> cancels. Key signatures at the start of a line apply throughout the piece.</p>`
+               <p><b>Accidentals:</b> <b>♯</b> raises a semitone, <b>♭</b> lowers, <b>♮</b> cancels. Key signatures at the start of a line apply throughout the piece.</p>
+               <div class="callout"><strong>Enharmonic equivalents — two notations, one single pitch!</strong>
+               Two notes can look completely different on the staff (e.g. <b>F♯</b> in the 1st space vs. <b>G♭</b> on the 2nd line, or even <b>E♯</b> vs. <b>F</b>), yet you press the <b>exact same piano key or guitar fret</b>! Which spelling is used depends on the key signature so each letter appears once per scale.</div>`
         },
         widget: 'notation_treble'
       },
@@ -790,7 +942,7 @@
             toks: 'I I^1 I^2 I',
             mode: 'maj',
             transpose: true,
-            desc: { de: 'Beobachte im Live-View, wie der gelbe Basston im Bassschlüssel wandert und sich oben das Notenbild verändert.', en: 'Watch the amber bass note move in the bass clef while the treble chord changes shape.' }
+            desc: { de: 'Beobachte im Live-View, wie der Basston im Bassschlüssel wandert und sich oben das Notenbild verändert.', en: 'Watch the bass note move in the bass clef while the treble chord changes shape.' }
           },
           {
             title: { de: 'Musikalische Stimmführung im Notenbild', en: 'Smooth voice leading in notation' },
@@ -812,16 +964,76 @@
         widget: 'note_rest_table'
       },
       {
-        title: { de: 'Punktierte Noten, Taktstriche, Wiederholungen & Spielweisen', en: 'Dotted Notes, Barlines, Repeats & Articulation' },
+        title: { de: 'Punktierte Noten, Taktstriche, Spielweisen, Dynamik & Tempo', en: 'Dotted Notes, Barlines, Articulation, Dynamics & Tempo' },
         body: {
-          de: `<p>Noten verraten nicht nur Tonhöhe und Länge, sondern auch <b>Aufbau</b> (Taktstriche, Wiederholungen) und <b>Ausdruck</b> (kurz, gebunden, betont):</p>
-               <div class="callout tip"><strong>Navigation &amp; Lautstärke (Dynamik)</strong>
-               • <b>D.C.</b> (<em>da capo</em>) = zurück zum Anfang · <b>D.S.</b> (<em>dal segno</em>) = zurück zum Zeichen (𝄋) · <b>Coda</b> = Schlussabschnitt.<br>
-               • <b>Dynamik:</b> <b>pp</b> (sehr leise) → <b>p</b> (<em>piano</em>, leise) → <b>mp / mf</b> (mittelleise / mittellaut) → <b>f</b> (<em>forte</em>, laut) → <b>ff</b> (sehr laut) · <b>&lt;</b> (<em>crescendo</em>, lauter werden) · <b>&gt;</b> (<em>decrescendo</em>, leiser werden).</div>`,
-          en: `<p>Sheet music communicates not only pitch and duration, but also <b>structure</b> (barlines, repeats) and <b>expression</b> (short, smooth, accented):</p>
-               <div class="callout tip"><strong>Navigation &amp; Dynamics</strong>
-               • <b>D.C.</b> (<em>da capo</em>) = back to the beginning · <b>D.S.</b> (<em>dal segno</em>) = back to the sign (𝄋) · <b>Coda</b> = closing section.<br>
-               • <b>Dynamics:</b> <b>pp</b> (very soft) → <b>p</b> (<em>piano</em>, soft) → <b>mp / mf</b> (medium soft / loud) → <b>f</b> (<em>forte</em>, loud) → <b>ff</b> (very loud) · <b>&lt;</b> (<em>crescendo</em>, getting louder) · <b>&gt;</b> (<em>decrescendo</em>, getting softer).</div>`
+          de: `<p>Noten verraten nicht nur Tonhöhe und Länge, sondern auch <b>Aufbau</b> (Taktstriche, Wiederholungen), <b>Spielweise</b> (kurz, gebunden, betont), <b>Lautstärke (Dynamik)</b> und <b>Tempo</b>:</p>
+               <div class="callout"><strong>Navigation im Notenblatt</strong>
+               <b>D.C.</b> (<em>da capo</em>) = zurück zum Anfang · <b>D.S.</b> (<em>dal segno</em>) = zurück zum Zeichen (𝄋) · <b>Fine</b> = Ende · <b>Coda</b> (𝄌) = angehängter Schlussabschnitt.</div>
+               <h4>Dynamik (Lautstärke-Fachbegriffe)</h4>
+               <p>Die Dynamik-Kürzel stammen aus dem Italienischen (<em>piano</em> = leise, <em>forte</em> = laut, <em>mezzo</em> = mittel/halb, <em>-issimo</em> = sehr):</p>
+               <div style="overflow-x:auto"><table class="data-tbl">
+                 <tr><th>Zeichen</th><th>Fachbegriff (Italienisch)</th><th>Bedeutung</th></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">ppp</b></td><td><em>pianississimo</em></td><td>äußerst leise (so leise wie möglich)</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">pp</b></td><td><em>pianissimo</em></td><td>sehr leise</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">p</b></td><td><em>piano</em></td><td>leise</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">mp</b></td><td><em>mezzopiano</em></td><td>mittelleise (halbleise)</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">mf</b></td><td><em>mezzoforte</em></td><td>mittellaut (halblaut)</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">f</b></td><td><em>forte</em></td><td>laut, kräftig</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">ff</b></td><td><em>fortissimo</em></td><td>sehr laut</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">fff</b></td><td><em>fortississimo</em></td><td>äußerst laut (so laut wie möglich)</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic">cresc. / &lt;</b></td><td><em>crescendo</em></td><td>allmählich lauter werden („wachsend“)</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic">decresc. / dim. / &gt;</b></td><td><em>decrescendo / diminuendo</em></td><td>allmählich leiser werden („abnehmend“)</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic">sfz / fp</b></td><td><em>sforzato / fortepiano</em></td><td>plötzlich stark betont (<em>sfz</em>) · laut anspielen, sofort leise (<em>fp</em>)</td></tr>
+               </table></div>
+               <h4>Tempi (Italienische Tempobezeichnungen)</h4>
+               <p>Am Anfang eines Stückes steht meist ein italienisches Wort, das <b>Tempo und Grundstimmung</b> gleichzeitig beschreibt:</p>
+               <div style="overflow-x:auto"><table class="data-tbl">
+                 <tr><th>Begriff</th><th>Wörtliche Bedeutung</th><th>Richtwert (BPM)</th></tr>
+                 <tr><td><b>Largo</b></td><td>breit, sehr langsam, getragen</td><td>ca. 40–60</td></tr>
+                 <tr><td><b>Adagio</b></td><td>langsam, ruhig, gemächlich</td><td>ca. 60–72</td></tr>
+                 <tr><td><b>Andante</b></td><td>„gehend“ – im ruhigen Schritt-Tempo</td><td>ca. 76–104</td></tr>
+                 <tr><td><b>Moderato</b></td><td>mäßig, mittel-schnell</td><td>ca. 104–120</td></tr>
+                 <tr><td><b>Allegretto</b></td><td>etwas munter, leicht bewegt (langsamer als Allegro)</td><td>ca. 112–124</td></tr>
+                 <tr><td><b>Allegro</b></td><td>fröhlich, munter, schnell</td><td>ca. 120–156</td></tr>
+                 <tr><td><b>Vivace</b></td><td>lebhaft, feurig, spritzig</td><td>ca. 156–176</td></tr>
+                 <tr><td><b>Presto</b></td><td>sehr schnell, eilig</td><td>ca. 176–200+</td></tr>
+               </table></div>
+               <p class="hint"><b>Tempoveränderungen im Stück:</b> <b>rit.</b> (<em>ritardando</em>) = langsamer werden · <b>accel.</b> (<em>accelerando</em>) = schneller werden · <b>a tempo</b> = zurück zum Ausgangstempo · <b>rubato</b> („geraubt“) = frei im Ausdruck schwankend.</p>
+               <h4>Zeichen für Aufbau, Rhythmus &amp; Spielweise</h4>`,
+          en: `<p>Sheet music communicates not only pitch and duration, but also <b>structure</b> (barlines, repeats), <b>articulation</b> (short, smooth, accented), <b>dynamics (volume)</b>, and <b>tempo</b>:</p>
+               <div class="callout"><strong>Navigation marks</strong>
+               <b>D.C.</b> (<em>da capo</em>) = back to the beginning · <b>D.S.</b> (<em>dal segno</em>) = back to the sign (𝄋) · <b>Fine</b> = end · <b>Coda</b> (𝄌) = closing section.</div>
+               <h4>Dynamics (Volume Markings)</h4>
+               <p>Dynamic markings come from Italian (<em>piano</em> = soft, <em>forte</em> = loud, <em>mezzo</em> = medium/half, <em>-issimo</em> = very):</p>
+               <div style="overflow-x:auto"><table class="data-tbl">
+                 <tr><th>Symbol</th><th>Italian term</th><th>Meaning</th></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">ppp</b></td><td><em>pianississimo</em></td><td>as soft as possible</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">pp</b></td><td><em>pianissimo</em></td><td>very soft</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">p</b></td><td><em>piano</em></td><td>soft</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">mp</b></td><td><em>mezzopiano</em></td><td>moderately soft</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">mf</b></td><td><em>mezzoforte</em></td><td>moderately loud</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">f</b></td><td><em>forte</em></td><td>loud, strong</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">ff</b></td><td><em>fortissimo</em></td><td>very loud</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic;font-size:1.05rem">fff</b></td><td><em>fortississimo</em></td><td>as loud as possible</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic">cresc. / &lt;</b></td><td><em>crescendo</em></td><td>gradually getting louder (“growing”)</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic">decresc. / dim. / &gt;</b></td><td><em>decrescendo / diminuendo</em></td><td>gradually getting softer</td></tr>
+                 <tr><td><b style="font-family:Georgia,serif;font-style:italic">sfz / fp</b></td><td><em>sforzato / fortepiano</em></td><td>sudden strong accent (<em>sfz</em>) · loud attack, immediately soft (<em>fp</em>)</td></tr>
+               </table></div>
+               <h4>Tempo Markings (Italian Terms &amp; Literal Meaning)</h4>
+               <p>A piece usually opens with an Italian word expressing both <b>speed and character</b>:</p>
+               <div style="overflow-x:auto"><table class="data-tbl">
+                 <tr><th>Term</th><th>Literal meaning</th><th>Typical BPM</th></tr>
+                 <tr><td><b>Largo</b></td><td>broad, very slow, stately</td><td>~40–60</td></tr>
+                 <tr><td><b>Adagio</b></td><td>slow, calm, at ease</td><td>~60–72</td></tr>
+                 <tr><td><b>Andante</b></td><td>“walking” — relaxed walking pace</td><td>~76–104</td></tr>
+                 <tr><td><b>Moderato</b></td><td>moderate speed</td><td>~104–120</td></tr>
+                 <tr><td><b>Allegretto</b></td><td>moderately lively (slightly slower than Allegro)</td><td>~112–124</td></tr>
+                 <tr><td><b>Allegro</b></td><td>cheerful, bright, fast</td><td>~120–156</td></tr>
+                 <tr><td><b>Vivace</b></td><td>lively, brisk, spirited</td><td>~156–176</td></tr>
+                 <tr><td><b>Presto</b></td><td>very fast, urgent</td><td>~176–200+</td></tr>
+               </table></div>
+               <p class="hint"><b>Tempo changes:</b> <b>rit.</b> (<em>ritardando</em>) = slowing down · <b>accel.</b> (<em>accelerando</em>) = speeding up · <b>a tempo</b> = return to original speed · <b>rubato</b> (“stolen”) = flexible, expressive push and pull.</p>
+               <h4>Barlines, Rhythm &amp; Articulation Symbols</h4>`
         },
         widget: 'articulation_symbols'
       }
@@ -871,6 +1083,7 @@
         },
         widget: 'circle',
         check: {
+          transpose: false,
           q: { de: 'Wie viele Vorzeichen hat A-Dur (3 Schritte im Uhrzeigersinn ab C)?', en: 'How many accidentals does A major have (3 steps clockwise from C)?' },
           opts: [
             { de: '3 ♭', en: '3 flats' },
@@ -894,6 +1107,7 @@
     units: [
       {
         title: { de: 'Transponieren, Nachbartonarten & Quintfall', en: 'Transposing, Modulation & Fall of Fifths' },
+        transposeBody: true,
         body: {
           de: `<ul>
                  <li><b>Transponieren ohne Rechnen:</b> Eine Akkordfolge ist ein geometrisches Muster im Kreis. Verschiebe das ganze Muster um eine Position nach rechts – schon ist der Song eine Quinte höher!</li>

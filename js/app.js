@@ -16,23 +16,43 @@
     'Kadenz: I – IV – V7 – I': ['I IV V7 I', 'maj'],
     'Ballade (Absteigender Bass)': ['I V^1 vi vi7^3 IV I^1 ii7 V7', 'maj'],
     'Line Cliché (Dur): I – Imaj7 – I7 – IV': ['I Imaj7 I7 IV iv I', 'maj'],
-    'Backdoor-Kadenz: I – iv7 – ♭VII7 – I': ['Imaj7 iv7 bVII7 Imaj7', 'maj'],
-    'Jazz ii–V–I (Dur)': ['ii7 V7 Imaj7', 'maj'],
-    'Jazz ii–V–i (Moll)': ['iiø V7 i', 'min'],
+    'Backdoor-Kadenz: I – iv7 – ♭VII7 – I': ['Imaj7:4 iv7:2 bVII7:2 Imaj7:4', 'maj'],
+    'Jazz ii–V–I (Dur)': ['ii7:2 V7:2 Imaj7:4', 'maj'],
+    'Jazz ii–V–i (Moll)': ['iiø:2 V7:2 i:4', 'min'],
     'Turnaround: I – vi – ii – V': ['Imaj7 vi7 ii7 V7', 'maj'],
     'Pachelbel-Kanon': ['I V vi iii IV I IV V', 'maj'],
     '12-Takt-Blues': ['I7 I7 I7 I7 IV7 IV7 I7 I7 V7 IV7 I7 V7', 'maj'],
+    'Jazz-Blues (12 Takte)': ['I7:4 IV7:4 I7:4 ii7/IV:2 V7/IV:2 IV7:4 #IV°7:4 I7:4 V7b9/ii:4 ii7:4 V7:4 I7:2 V7/ii:2 ii7:2 V7:2', 'maj'],
+    'Rhythm Changes (A + Bridge)': ['I:1 vi7:1 ii7:1 V7:1 III7:2 VI7:2 II7:2 V7:2 I:2', 'maj'],
+    'Royal Road (J-Pop / Anime)': ['IVmaj7:2 V7:2 iii7:2 vi7:2 IVmaj7:2 V7:2 Imaj7:4', 'maj'],
+    'Gospel: 7–3–6–2–5–1': ['I:2 viiø:1 V7b9/vi:1 vi7:2 ii7:1 V9:1 Imaj9:4', 'maj'],
+    'Gospel Walk-Up (Aufsteigend)': ['I I7^1 IV #IV°7 I^2 #V°7 vi7 ii7 IV@V V7 I', 'maj'],
+    'Gospel Walk-Down (Chromatisch)': ['I I7^3 IV^1 iv^1 I^2 V I', 'maj'],
+    'Gospel Walk-Down (Ganze Leiter)': ['I V^1 vi7 V7/IV^2 IV I^1 ii7 IV@V I', 'maj'],
+    'Gospel Praise / Shout-Schluss': ['I V7/IV^1 IV #IV°7 I^2 bVImaj7 bVII9 Imaj9', 'maj'],
+    'Coltrane Changes (Giant Steps)': ['Imaj7:2 bIII7:2 bVImaj7:2 VII7:2 IIImaj7:2 V7:2 Imaj7:4', 'maj'],
     'Andalusische Kadenz': ['i bVII bVI V', 'min'],
-    'Heldenkadenz (Modal Interchange)': ['I bVI bVII I', 'maj'],
+    'Heldenkadenz (Modal Interchange)': ['I:2 bVI:1 bVII:1 I:4', 'maj'],
+    'Negative Harmonie (iv6 → I)': ['I:2 iv6:2 bVII7:2 I:4', 'maj'],
+    'Filmmusik: Fellowship Theme (Herr der Ringe)': ['I:2 bIII:2 I:4 bVI:2 bIII:2 IV:2 bVI:1 bVII:1 I:2', 'maj'],
+    'Filmmusik: Medianten & I–♭V': ['I:2 bIII:2 bVI:2 I:2 bV:2 I:4', 'maj'],
+    'Quartal / So-What-Vamp': ['i11:4 bii11:4 i11:4', 'min'],
+    'Neo-Soul (Tom Misch Style)': ['vi9 IVmaj9 ii11 V+7', 'maj'],
+    'Neo-Soul (Robert Glasper Chromatik)': ['vi9 bvi9 v9 IVmaj9 IV@V', 'maj'],
+    'Neo-Soul (Erykah Badu m9-Medianten)': ['i9 bvi9 bvii9 iv9', 'min'],
+    'Neo-Soul (Tom Misch Turnaround + Backdoor)': ['Imaj9 VI7#9 ii9 V13 iv6 bVII13', 'maj'],
+    'Exotic R&B (maj7♯5 & 7♯9→7♭9)': ['Imaj9 Imaj7#5 IVmaj9 iv6 ii11:2 V7#9:1 V7b9:1 Imaj9:4', 'maj'],
     'Orgelpunkt: I – IV/I – V/I – I': ['I IV@I V@I I', 'maj'],
-    'Sekundärdominanten': ['I V7/vi vi V7/V V7 I', 'maj'],
-    'Tritonus-Substitution': ['ii7 bII7 Imaj7', 'maj'],
-    'Neapolitaner + i⁶₄': ['i bII^1 i^2 V7 i', 'min']
+    'Sekundärdominanten': ['I:2 V7/vi:2 vi:2 V7/V:1 V7:1 I:4', 'maj'],
+    'Tritonus-Substitution': ['ii7:2 bII7:2 Imaj7:4', 'maj'],
+    'Jazz-Gitarre: Shell-Kette (Tritonus-Sub)': ['V7:2 bII7:2 I7:2 IV7:2 III7:2 bVII7:2 VI7:2 II7:2 bII7:2 Imaj7:4', 'maj'],
+    'Neapolitaner + i⁶₄': ['i:2 bII^1:2 i^2:1 V7:1 i:2', 'min']
   };
 
   let customPresets = {};
   const openChapters = {};
   const scaleIdxByWidget = { scales_basic: 0, scales_modes: 0, scales_world: 0 };
+  const SCALE_TOOL = { cat: 'basic', idx: 0, root: null, clef: 'treble' };
   let scalePlaying = false;
 
   // Player state (shared by Practice Tool & Lesson Examples)
@@ -40,7 +60,7 @@
     toks: 'I V vi IV',
     mode: 'maj',
     inv: 0,
-    bpm: 100,
+    bpm: 84,
     beats: 4,
     reps: 2,
     mod: 'none',
@@ -57,8 +77,8 @@
     rep: 0,
     round: 0,
     nextKey: null,
-    prevUpper: null,
-    prevBass: null,
+    voiced: null,
+    voicedSig: '',
     timer: null,
     countingIn: 0
   };
@@ -81,6 +101,7 @@
       if (saved.done) S.done = saved.done;
       if (saved.customPresets) customPresets = saved.customPresets;
       if (saved.audioStyle) A.setStyle(saved.audioStyle);
+      if (saved.audioInst) A.setInstrument(saved.audioInst);
       if (typeof saved.audioVol === 'number') A.setVolume(saved.audioVol);
     } catch (e) {}
   }
@@ -96,6 +117,7 @@
         done: S.done,
         customPresets,
         audioStyle: A.settings.style,
+        audioInst: A.settings.instrument,
         audioVol: A.settings.volume
       }));
     } catch (e) {}
@@ -139,6 +161,9 @@
 
     populateKeySelects();
     populateVoicingSelect($('#p-inv'), P.inv);
+    populateVoicingSelect($('#live-voicing'), P.inv);
+    populateInstrumentSelect($('#audio-inst'));
+    populateInstrumentSelect($('#live-inst'));
     populateChordQualSelect();
     populatePresets();
     applyNotationBtn();
@@ -148,7 +173,7 @@
   }
 
   function populateKeySelects() {
-    const opts = T.N_FLAT.map((raw, i) => `<option value="${i}">${T.fmtNote(raw)}</option>`).join('');
+    const opts = T.N_FLAT.map((_, i) => `<option value="${i}">${T.keyPairLabel(i)}</option>`).join('');
     ['#global-key', '#p-key'].forEach(sel => {
       const el = $(sel);
       if (el) {
@@ -163,6 +188,25 @@
     const list = MT.I18N[S.lang].voicings;
     el.innerHTML = list.map(([v, lbl]) => `<option value="${v}">${lbl}</option>`).join('');
     el.value = String(currentVal);
+  }
+
+  function populateInstrumentSelect(el) {
+    if (!el) return;
+    const list = MT.I18N[S.lang].instruments || [];
+    el.innerHTML = list.map(([v, lbl]) => `<option value="${v}">${lbl}</option>`).join('');
+    el.value = A.settings.instrument;
+  }
+
+  function setInstrument(inst, preview = true) {
+    A.setInstrument(inst);
+    const aEl = $('#audio-inst');
+    const lEl = $('#live-inst');
+    if (aEl) aEl.value = A.settings.instrument;
+    if (lEl) lEl.value = A.settings.instrument;
+    saveState();
+    if (preview && !P.run && S.curChord && S.curChord._voicing) {
+      A.playChordNotes(S.curChord._voicing.all, 1.35);
+    }
   }
 
   function populateChordQualSelect() {
@@ -225,6 +269,7 @@
     const tools = [
       ['p', MT.t('tool_practice')],
       ['e', MT.t('tool_quiz')],
+      ['s', MT.t('tool_scales')],
       ['c', MT.t('tool_chords')],
       ['q', MT.t('tool_circle')]
     ];
@@ -244,10 +289,11 @@
     if (S.tab !== tabId) {
       stopPlayer();
       A.stopScale();
+      scalePlaying = false;
       MT.quiz.stopCadenceAudio();
     }
     S.tab = tabId;
-    ['l', 'p', 'e', 'c', 'q'].forEach(k => {
+    ['l', 'p', 'e', 's', 'c', 'q'].forEach(k => {
       $('#tab-' + k).classList.toggle('hide', k !== tabId);
     });
     renderSidebar();
@@ -259,13 +305,23 @@
     if (S.tab === 'l') renderLesson();
     else if (S.tab === 'p') renderPracticeView();
     else if (S.tab === 'e') MT.quiz.init();
+    else if (S.tab === 's') renderScaleTool();
     else if (S.tab === 'c') renderChordTable();
     else if (S.tab === 'q') $('#q-circle').innerHTML = V.circleHTML(S.key);
   }
 
   /* -------------------- Global Key Sync -------------------- */
+  function exampleKey(ex) {
+    return (ex && ex.mode === 'min' && !ex.sameTonic) ? T.relativeMinorKey(S.key) : S.key;
+  }
+
+  function practiceKey() {
+    return P.mode === 'min' ? T.relativeMinorKey(S.key) : S.key;
+  }
+
   function setGlobalKey(newKey) {
     S.key = ((newKey % 12) + 12) % 12;
+    SCALE_TOOL.root = null;
     $('#global-key').value = String(S.key);
     $('#p-key').value = String(S.key);
     renderActiveTab();
@@ -276,6 +332,17 @@
     'minor_harmony', 'cadences', 'intervals', 'notation', 'circle_build',
     'chord_symbols', 'sus_add_six'
   ]);
+
+  function setVoicing(val, refreshLive = true) {
+    P.inv = +val;
+    P.voiced = null;
+    P.voicedSig = '';
+    const pInv = $('#p-inv');
+    const lInv = $('#live-voicing');
+    if (pInv) pInv.value = String(P.inv);
+    if (lInv) lInv.value = String(P.inv);
+    if (refreshLive && S.curChord && !P.run) showChord(S.curChord, false);
+  }
 
   /* -------------------- Lesson Renderer -------------------- */
   function openLesson(lessonId, unitIdx = 0) {
@@ -291,16 +358,14 @@
     // In foundational lessons default to Root Position (0) so inversions don't confuse beginners;
     // in voice-leading / jazz / advanced lessons default to Voice Leading · Start Root (10).
     if (lessonChanged) {
-      P.inv = BASIC_VOICING_LESSONS.has(lessonId) ? 0 : 10;
-      const pInvEl = $('#p-inv');
-      if (pInvEl) pInvEl.value = String(P.inv);
+      setVoicing(BASIC_VOICING_LESSONS.has(lessonId) ? 0 : 10, false);
     }
 
     // Ensure chapter is open
     const chap = MT.CHAPTERS.find(c => c.lessons.includes(lessonId));
     if (chap) openChapters[chap.id] = true;
 
-    ['l', 'p', 'e', 'c', 'q'].forEach(k => $('#tab-' + k).classList.toggle('hide', k !== 'l'));
+    ['l', 'p', 'e', 's', 'c', 'q'].forEach(k => $('#tab-' + k).classList.toggle('hide', k !== 'l'));
     renderSidebar();
     renderLesson();
     closeDrawer();
@@ -332,18 +397,16 @@
     // Curated Listening Examples for this exact unit
     let exHtml = '';
     if (unit.examples && unit.examples.length) {
-      const voicingOpts = MT.I18N[S.lang].voicings
-        .map(([v, lbl]) => `<option value="${v}"${v === P.inv ? ' selected' : ''}>${lbl}</option>`).join('');
-
       const cards = unit.examples.map((ex, idx) => {
-        const { chords } = T.parseProgression(ex.toks, S.key, ex.mode);
+        const exKey = exampleKey(ex);
+        const { chords } = T.parseProgression(ex.toks, exKey, ex.mode);
         const chipsId = `ex-chips-${idx}`;
         const btnId = `ex-btn-${idx}`;
         const rawDesc = MT.loc(ex.desc);
         const desc = ex.transpose
-          ? T.transposeText(rawDesc.replace(/\[([^\]]+)\]/g, '$1'), S.key)
+          ? T.transposeText(rawDesc.replace(/\[([^\]]+)\]/g, '$1'), exKey)
           : formatRichText(rawDesc);
-        const relHtml = ex.relHint ? T.relativeMajorHint(ex.toks, S.key) : '';
+        const relHtml = ex.relHint ? T.relativeMajorHint(ex.toks, exKey) : '';
 
         return `
           <div class="ex-card">
@@ -360,34 +423,31 @@
           </div>`;
       }).join('');
 
-      const basicTip = BASIC_VOICING_LESSONS.has(S.lessonId)
+      const voicingTip = BASIC_VOICING_LESSONS.has(S.lessonId)
         ? `<div class="callout tip" style="margin:8px 0 12px;font-size:.88rem">${MT.t('voicing_basic_tip')}</div>`
-        : '';
+        : `<div class="callout tip" style="margin:8px 0 12px;font-size:.88rem">${MT.t('voicing_advanced_tip')}</div>`;
 
       exHtml = `
         <div class="ex-section">
-          <div class="card-head">
-            <h3 style="margin:0">${MT.t('examples_title')}</h3>
-            <label class="inline-ctrl">
-              <span>${MT.t('voicing')}</span>
-              <select id="lesson-voicing">${voicingOpts}</select>
-            </label>
-          </div>
+          <h3 style="margin:0 0 6px">${MT.t('examples_title')}</h3>
           <p class="hint" style="margin-top:0">${MT.t('examples_note')}</p>
-          ${basicTip}
+          ${voicingTip}
           ${cards}
         </div>`;
     }
 
-    // Inline Mini-Check
+    // Inline Mini-Check (automatically transposes chord/note examples unless check.transpose === false)
     let checkHtml = '';
     if (unit.check) {
+      const fmtChk = obj => unit.check.transpose === false
+        ? formatRichText(MT.loc(obj, S.key))
+        : T.transposeHTML(MT.loc(obj, S.key), S.key);
       checkHtml = `
         <div class="quiz-box" id="mini-check">
           <h4 style="margin-top:0">✅ ${MT.t('mini_check')}</h4>
-          <p style="font-weight:600">${formatRichText(MT.loc(unit.check.q))}</p>
+          <p style="font-weight:600">${fmtChk(unit.check.q)}</p>
           <div class="quiz-options">
-            ${unit.check.opts.map((o, idx) => `<button class="quiz-opt" data-mc="${idx}">${formatRichText(MT.loc(o))}</button>`).join('')}
+            ${unit.check.opts.map((o, idx) => `<button class="quiz-opt" data-mc="${idx}">${fmtChk(o)}</button>`).join('')}
           </div>
           <div id="mc-feedback"></div>
         </div>`;
@@ -396,6 +456,7 @@
     const isFirst = lesNum === 0 && S.unitIdx === 0;
     const isLast = lesNum === ALL_LESSON_IDS.length - 1 && S.unitIdx === les.units.length - 1;
 
+    const bodyKey = unit.minorBody ? T.relativeMinorKey(S.key) : S.key;
     $('#lesson-card').innerHTML = `
       <div class="meta-row">
         <span>${MT.loc(chap.title)} › ${MT.t('lesson_of', { i: lesNum + 1, n: ALL_LESSON_IDS.length })}</span>
@@ -408,7 +469,7 @@
       ${pills}
       <div class="prose">
         ${les.units.length > 1 ? `<h3 style="margin-top:0">${MT.loc(unit.title)}</h3>` : ''}
-        ${unit.transposeBody ? T.transposeHTML(MT.loc(unit.body, S.key), S.key) : formatRichText(MT.loc(unit.body, S.key))}
+        ${unit.transposeBody ? T.transposeHTML(MT.loc(unit.body, bodyKey), bodyKey) : formatRichText(MT.loc(unit.body, bodyKey))}
       </div>
       ${widgetHtml}
       ${exHtml}
@@ -452,19 +513,40 @@
       return V.articulationSymbolsHTML();
     }
     if (type === 'notation_treble') {
+      const en = S.lang === 'en';
+      const enhPairs = [
+        [61, 'C♯', 'D♭'],
+        [63, 'D♯', 'E♭'],
+        [66, 'F♯', 'G♭'],
+        [68, 'G♯', 'A♭'],
+        [70, 'A♯', 'B♭'],
+        [65, 'E♯', 'F']
+      ];
+      const enhBtns = enhPairs.map(([midi, a, b], idx) => {
+        const lbl = `${T.fmtNote(a)} = ${T.fmtNote(b)}`;
+        return `<button class="btn sm${idx === 2 ? ' primary' : ''}" data-enharm-midi="${midi}" data-enharm-lbl="${lbl}">▶ ${lbl}</button>`;
+      }).join('');
       return `
         <div class="ex-card">
-          <h4>${S.lang === 'en' ? 'Natural notes in the treble clef' : 'Stammtöne im Violinschlüssel'}</h4>
-          ${V.singleStaffSVG([[60, 'C'], [62, 'D'], [64, 'E'], [65, 'F'], [67, 'G'], [69, 'A'], [71, 'B'], [72, 'C']], 'treble')}
-          <h4>${S.lang === 'en' ? 'Notes with accidentals' : 'Noten mit Vorzeichen (♯ und ♭)'}</h4>
-          ${V.singleStaffSVG([[61, 'C♯'], [63, 'E♭'], [66, 'F♯'], [68, 'A♭'], [70, 'B♭']], 'treble')}
+          <h4>${en ? 'Natural notes in the treble clef' : 'Stammtöne im Violinschlüssel'}</h4>
+          ${V.scaleStaffSVG([[60, 'C'], [62, 'D'], [64, 'E'], [65, 'F'], [67, 'G'], [69, 'A'], [71, 'B'], [72, 'C']], 'treble')}
+          <h4>${en ? 'Notes with accidentals (♯ and ♭)' : 'Noten mit Vorzeichen (♯ und ♭)'}</h4>
+          ${V.scaleStaffSVG([[61, 'C♯'], [63, 'E♭'], [66, 'F♯'], [68, 'A♭'], [70, 'B♭']], 'treble')}
+          <h4>${en ? 'Enharmonic equivalents: different notation, exact same key!' : 'Enharmonische Verwechslung: anderes Notenbild, exakt dieselbe Taste!'}</h4>
+          <p class="hint" style="margin:0 0 8px">${en ? 'Look closely: inside each bar the two notes sit on different lines or spaces. Tap any pair below to hear the exact same pitch twice and see the single piano key:' : 'Schau genau hin: In jedem Takt stehen beide Noten auf unterschiedlichen Linien oder Zwischenräumen. Tippe ein Paar an, um exakt denselben Klang zweimal zu hören und die eine gemeinsame Taste zu sehen:'}</p>
+          ${V.enharmonicStaffSVG(enhPairs)}
+          <div class="row" style="margin:10px 0 8px">${enhBtns}</div>
+          <div id="enharm-piano-wrap">
+            ${V.pianoSVG({ lo: 60, hi: 73, activeNotes: [66], spellMap: { 6: 'F♯ / G♭' } })}
+            <div class="hint" style="margin-top:4px">${en ? 'Selected pair:' : 'Gewähltes Paar:'} <b id="enharm-caption">F♯ = G♭</b> → ${en ? '1 single key on the piano!' : 'exakt 1 Taste am Klavier!'}</div>
+          </div>
         </div>`;
     }
     if (type === 'notation_bass') {
       return `
         <div class="ex-card">
           <h4>${S.lang === 'en' ? 'Bass clef notes (G2 to C4)' : 'Töne im Bassschlüssel (G2 bis C4)'}</h4>
-          ${V.singleStaffSVG([[43, 'G'], [45, 'A'], [47, 'B'], [48, 'C'], [50, 'D'], [52, 'E'], [53, 'F'], [55, 'G'], [57, 'A'], [60, 'C']], 'bass')}
+          ${V.scaleStaffSVG([[43, 'G'], [45, 'A'], [47, 'B'], [48, 'C'], [50, 'D'], [52, 'E'], [53, 'F'], [55, 'G'], [57, 'A'], [60, 'C']], 'bass')}
         </div>`;
     }
     return '';
@@ -478,10 +560,11 @@
     const sc = list[idx];
     const ints = sc.ints;
     const isSeven = ints.length === 7;
-    const base = 60 + S.key;
+    const scKey = sc.isMin ? T.relativeMinorKey(S.key) : S.key;
+    const base = 60 + scKey;
     const midiNotes = [...ints.map(x => base + x), base + 12];
     const degLabels = T.scaleDegreeLabels(ints);
-    const rawNames = ints.map((x, i) => isSeven ? T.spellInKey(S.key, x, i) : T.N_FLAT[(S.key + x) % 12]);
+    const rawNames = T.spellScale(ints, scKey);
     const dispNames = rawNames.map(n => T.fmtNote(n));
     const steps = ints.map((x, i) => {
       const d = (ints[i + 1] != null ? ints[i + 1] : 12) - x;
@@ -490,25 +573,41 @@
     });
 
     const parentHtml = sc.parentOff != null
-      ? `<p class="hint" style="margin:6px 0">${MT.t('mode_of', { k: T.noteName((S.key - sc.parentOff + 12) % 12), d: sc.deg })}</p>`
+      ? `<p class="hint" style="margin:6px 0">${MT.t('mode_of', { k: T.noteName((scKey - sc.parentOff + 12) % 12), d: sc.deg })}</p>`
       : '';
 
     const spMap = {};
-    ints.forEach((x, i) => { spMap[(S.key + x) % 12] = rawNames[i]; });
+    ints.forEach((x, i) => { spMap[(scKey + x) % 12] = rawNames[i]; });
 
     let harmHtml = '';
     if (isSeven) {
-      const { triads, sevenths } = T.harmonizeScale(ints, S.key);
+      const { triads, sevenths } = T.harmonizeScale(ints, scKey);
       harmHtml = `
         <h4>${MT.t('scale_triads')}</h4>
         <div class="chips">${chipsHTML(triads, -1)}</div>
         <h4>${MT.t('scale_sevenths')}</h4>
         <div class="chips">${chipsHTML(sevenths, -1)}</div>`;
     } else {
-      harmHtml = `<p class="hint">${MT.t('scale_no_chords')}</p>`;
+      const extraNote = ints.length > 7
+        ? (S.lang === 'en'
+          ? ` This scale has <b>${ints.length} notes</b> (more than the standard 7), so a degree digit and letter name repeat (clarified with ♮ in the staff).`
+          : ` Diese Skala hat <b>${ints.length} Töne</b> (mehr als die westlich üblichen 7) – deshalb kommt eine Ziffer bzw. ein Stammton doppelt vor (im Notenbild durch ♮ aufgelöst).`)
+        : (S.lang === 'en'
+          ? ` This scale has <b>${ints.length} notes</b>.`
+          : ` Diese Skala besteht aus <b>${ints.length} Tönen</b>.`);
+      harmHtml = `<p class="hint">${MT.t('scale_no_chords')}${extraNote}</p>`;
     }
 
     const opts = list.map((s, i) => `<option value="${i}"${i === idx ? ' selected' : ''}>${MT.loc(s.name)}</option>`).join('');
+    const staffItems = [...ints.map((x, i) => [base + x, rawNames[i]]), [base + 12, rawNames[0]]];
+    const degCells = degLabels.map((d, i) => {
+      const m = base + ints[i];
+      return `<td data-sc-midi="${m}" data-sc-pc="${m % 12}"><b>${d}</b></td>`;
+    }).join('');
+    const nameCells = dispNames.map((n, i) => {
+      const m = base + ints[i];
+      return `<td data-sc-midi="${m}" data-sc-pc="${m % 12}">${n}</td>`;
+    }).join('');
 
     return `
       <div class="ex-card" data-scale-widget="${widgetType}">
@@ -522,15 +621,257 @@
           </button>
           <span class="hint">${S.lang === 'en' ? 'Steps' : 'Schritte'}: <b>${steps.join(' ')}</b></span>
         </div>
-        <h4 style="margin:6px 0 4px">${T.noteName(S.key)} – ${MT.loc(sc.name)}</h4>
+        <h4 style="margin:6px 0 4px">${T.noteName(scKey)} – ${MT.loc(sc.name)}</h4>
         ${parentHtml}
         <table class="sc-tbl">
-          <tr>${degLabels.map(d => `<td><b>${d}</b></td>`).join('')}</tr>
-          <tr>${dispNames.map(n => `<td>${n}</td>`).join('')}</tr>
+          <tr>${degCells}</tr>
+          <tr>${nameCells}</tr>
         </table>
+        <div style="margin:8px 0">${V.scaleStaffSVG(staffItems, 'treble')}</div>
         ${V.pianoSVG({ lo: 60, hi: 84, bass: base, activeNotes: midiNotes.slice(1), spellMap: spMap })}
         ${harmHtml}
       </div>`;
+  }
+
+  /* -------------------- Scale Bidirectional Highlighting -------------------- */
+  let scaleHlTimer = null;
+
+  function clearScaleHighlight(container) {
+    if (scaleHlTimer) { clearTimeout(scaleHlTimer); scaleHlTimer = null; }
+    const root = container || document;
+    root.querySelectorAll('.piano-key.hl, .staff-note.hl, .sc-tbl td.hl').forEach(el => el.classList.remove('hl'));
+  }
+
+  function highlightScaleNote(container, midi, durationMs = 0) {
+    if (!container) return;
+    clearScaleHighlight(container);
+    const pc = ((midi % 12) + 12) % 12;
+
+    // 1. Piano key (exact MIDI pitch)
+    const pKeys = container.querySelectorAll(`.piano-key[data-midi="${midi}"]`);
+    pKeys.forEach(k => k.classList.add('hl'));
+
+    // 2. Classical staff note (exact MIDI first, fallback to same pitch class if user clicked another octave)
+    let sNotes = container.querySelectorAll(`.staff-note[data-midi="${midi}"]`);
+    if (!sNotes.length) {
+      sNotes = container.querySelectorAll(`.staff-note[data-pc="${pc}"]`);
+    }
+    sNotes.forEach(n => n.classList.add('hl'));
+
+    // 3. Scale degree / note table cells (exact MIDI first, fallback to pitch class e.g. top octave note -> degree 1)
+    let tCells = container.querySelectorAll(`.sc-tbl td[data-sc-midi="${midi}"]`);
+    if (!tCells.length) {
+      tCells = container.querySelectorAll(`.sc-tbl td[data-sc-pc="${pc}"]`);
+    }
+    tCells.forEach(td => td.classList.add('hl'));
+
+    if (durationMs > 0) {
+      scaleHlTimer = setTimeout(() => clearScaleHighlight(container), durationMs);
+    }
+  }
+
+  /* -------------------- Dedicated Scale Explorer Tool -------------------- */
+  function renderScaleTool() {
+    const rootEl = $('#scale-tool-root');
+    if (!rootEl) return;
+
+    const CATS = [
+      ['basic', MT.t('scale_cat_basic'), T.SCALES_BASIC],
+      ['modes', MT.t('scale_cat_modes'), T.SCALES_MODES],
+      ['world', MT.t('scale_cat_world'), T.SCALES_WORLD]
+    ];
+    const activeCat = CATS.find(c => c[0] === SCALE_TOOL.cat) || CATS[0];
+    const list = activeCat[2];
+    if (SCALE_TOOL.idx >= list.length) SCALE_TOOL.idx = 0;
+    const sc = list[SCALE_TOOL.idx];
+    const ints = sc.ints;
+    const isSeven = ints.length === 7;
+
+    // Default root follows global key (relative minor for basic minor scales), or user's direct override
+    const scKey = SCALE_TOOL.root != null
+      ? SCALE_TOOL.root
+      : (sc.isMin ? T.relativeMinorKey(S.key) : S.key);
+
+    const isBass = SCALE_TOOL.clef === 'bass';
+    const base = isBass
+      ? (scKey >= 7 ? 36 + scKey : 48 + scKey) // G2..B2 or C3..F#3 cleanly inside bass staff
+      : (60 + scKey);                           // C4..B4 cleanly inside treble staff
+
+    const midiAsc = [...ints.map(x => base + x), base + 12];
+    const descBase = sc.descInts ? sc.descInts.map(x => base + x) : midiAsc.slice(0, -1);
+    const midiUpDown = [...midiAsc, ...descBase.slice().reverse()];
+    const degLabels = T.scaleDegreeLabels(ints);
+    const rawNames = T.spellScale(ints, scKey);
+    const dispNames = rawNames.map(n => T.fmtNote(n));
+    const staffItems = [...ints.map((x, i) => [base + x, rawNames[i]]), [base + 12, rawNames[0]]];
+    const steps = ints.map((x, i) => {
+      const d = (ints[i + 1] != null ? ints[i + 1] : 12) - x;
+      if (S.lang === 'en') return d === 1 ? 'H' : d === 2 ? 'W' : d === 3 ? '1½' : String(d);
+      return d === 1 ? 'H' : d === 2 ? 'G' : d === 3 ? '1½' : String(d);
+    });
+
+    const parentHtml = sc.parentOff != null
+      ? `<p class="hint" style="margin:6px 0">${MT.t('mode_of', { k: T.noteName((scKey - sc.parentOff + 12) % 12), d: sc.deg })}</p>`
+      : '';
+
+    const spMap = {};
+    ints.forEach((x, i) => { spMap[(scKey + x) % 12] = rawNames[i]; });
+
+    let harmHtml = '';
+    if (isSeven) {
+      const { triads, sevenths } = T.harmonizeScale(ints, scKey);
+      harmHtml = `
+        <h4>${MT.t('scale_triads')}</h4>
+        <div class="chips">${chipsHTML(triads, -1)}</div>
+        <h4>${MT.t('scale_sevenths')}</h4>
+        <div class="chips">${chipsHTML(sevenths, -1)}</div>`;
+    } else {
+      const extraNote = ints.length > 7
+        ? (S.lang === 'en'
+          ? ` This scale has <b>${ints.length} notes</b> (more than the standard 7), so a degree digit and letter name repeat (clarified with ♮ in the staff).`
+          : ` Diese Skala hat <b>${ints.length} Töne</b> (mehr als die westlich üblichen 7) – deshalb kommt eine Ziffer bzw. ein Stammton doppelt vor (im Notenbild durch ♮ aufgelöst).`)
+        : (S.lang === 'en'
+          ? ` This scale has <b>${ints.length} notes</b>.`
+          : ` Diese Skala besteht aus <b>${ints.length} Tönen</b>.`);
+      harmHtml = `<p class="hint">${MT.t('scale_no_chords')}${extraNote}</p>`;
+    }
+
+    const catPills = CATS.map(([id, lbl]) =>
+      `<button data-scat="${id}" class="${SCALE_TOOL.cat === id ? 'on' : ''}">${lbl}</button>`
+    ).join('');
+    const rootOpts = T.N_FLAT.map((_, i) =>
+      `<option value="${i}"${i === scKey ? ' selected' : ''}>${T.noteName(i)}</option>`
+    ).join('');
+    const scaleOpts = list.map((s, i) =>
+      `<option value="${i}"${i === SCALE_TOOL.idx ? ' selected' : ''}>${MT.loc(s.name)}</option>`
+    ).join('');
+
+    const pianoLo = Math.floor(base / 12) * 12;
+    const pianoHi = pianoLo + 24;
+    const degCells = degLabels.map((d, i) => {
+      const m = base + ints[i];
+      return `<td data-sc-midi="${m}" data-sc-pc="${m % 12}"><b>${d}</b></td>`;
+    }).join('');
+    const nameCells = dispNames.map((n, i) => {
+      const m = base + ints[i];
+      return `<td data-sc-midi="${m}" data-sc-pc="${m % 12}">${n}</td>`;
+    }).join('');
+
+    rootEl.innerHTML = `
+      <h2>${MT.t('scale_tool_title')}</h2>
+      <p class="hint">${MT.t('scale_tool_sub')}</p>
+      <div class="quiz-modes" style="margin-bottom:14px">${catPills}</div>
+      <div class="form-grid">
+        <label>
+          <span>${MT.t('scale_root')}</span>
+          <select id="st-root">${rootOpts}</select>
+        </label>
+        <label>
+          <span>${MT.t('scale_select')}</span>
+          <select id="st-scale">${scaleOpts}</select>
+        </label>
+        <label>
+          <span>${MT.t('scale_clef')}</span>
+          <select id="st-clef">
+            <option value="treble"${!isBass ? ' selected' : ''}>${MT.t('clef_treble')}</option>
+            <option value="bass"${isBass ? ' selected' : ''}>${MT.t('clef_bass')}</option>
+          </select>
+        </label>
+      </div>
+      <div class="row toolbar-row">
+        <button class="btn ${scalePlaying ? 'playing' : 'primary'}" id="st-play-asc">${scalePlaying ? MT.t('scale_stop') : MT.t('scale_listen')}</button>
+        <button class="btn" id="st-play-ud">${MT.t('scale_listen_updown')}</button>
+        <span class="hint">${S.lang === 'en' ? 'Steps' : 'Schritte'}: <b>${steps.join(' ')}</b></span>
+      </div>
+      <div class="ex-card" style="margin-top:12px">
+        <h3 style="margin:0 0 4px">${T.noteName(scKey)} – ${MT.loc(sc.name)}</h3>
+        ${parentHtml}
+        <table class="sc-tbl">
+          <tr>${degCells}</tr>
+          <tr>${nameCells}</tr>
+        </table>
+        <h4 style="margin:12px 0 4px">${MT.t('scale_notation_title')}</h4>
+        ${V.scaleStaffSVG(staffItems, SCALE_TOOL.clef)}
+        <div style="margin-top:10px">
+          ${V.pianoSVG({ lo: pianoLo, hi: pianoHi, bass: base, activeNotes: midiAsc.slice(1), spellMap: spMap })}
+        </div>
+        ${harmHtml}
+      </div>
+    `;
+
+    // Bind Scale Tool events
+    rootEl.querySelectorAll('[data-scat]').forEach(btn => {
+      btn.onclick = () => {
+        A.stopScale();
+        scalePlaying = false;
+        clearScaleHighlight(rootEl);
+        SCALE_TOOL.cat = btn.dataset.scat;
+        SCALE_TOOL.idx = 0;
+        renderScaleTool();
+      };
+    });
+    $('#st-root').onchange = e => {
+      A.stopScale();
+      scalePlaying = false;
+      clearScaleHighlight(rootEl);
+      SCALE_TOOL.root = +e.target.value;
+      renderScaleTool();
+    };
+    $('#st-scale').onchange = e => {
+      A.stopScale();
+      scalePlaying = false;
+      clearScaleHighlight(rootEl);
+      SCALE_TOOL.idx = +e.target.value;
+      renderScaleTool();
+    };
+    $('#st-clef').onchange = e => {
+      A.stopScale();
+      scalePlaying = false;
+      clearScaleHighlight(rootEl);
+      SCALE_TOOL.clef = e.target.value;
+      renderScaleTool();
+    };
+
+    const syncPlayBtns = playing => {
+      const ascBtn = $('#st-play-asc');
+      if (ascBtn) {
+        ascBtn.textContent = playing ? MT.t('scale_stop') : MT.t('scale_listen');
+        ascBtn.classList.toggle('playing', playing);
+        ascBtn.classList.toggle('primary', !playing);
+      }
+    };
+
+    const startScalePlay = notesArr => {
+      if (scalePlaying) {
+        A.stopScale();
+        scalePlaying = false;
+        clearScaleHighlight(rootEl);
+        syncPlayBtns(false);
+        return;
+      }
+      stopPlayer();
+      scalePlaying = true;
+      syncPlayBtns(true);
+      A.playScale(
+        notesArr,
+        340,
+        (_, midi) => highlightScaleNote(rootEl, midi, 0),
+        () => {
+          scalePlaying = false;
+          clearScaleHighlight(rootEl);
+          syncPlayBtns(false);
+        }
+      );
+    };
+    $('#st-play-asc').onclick = () => startScalePlay(midiAsc);
+    $('#st-play-ud').onclick = () => {
+      if (scalePlaying) {
+        A.stopScale();
+        scalePlaying = false;
+        clearScaleHighlight(rootEl);
+      }
+      startScalePlay(midiUpDown);
+    };
   }
 
   function renderChordSymbolTableHTML(key) {
@@ -546,7 +887,8 @@
       ['dim7', 'vollvermindert', 'Fully diminished'],
       ['sus2', 'Sekunde statt Terz', '2nd instead of 3rd'],
       ['sus4', 'Quarte statt Terz', '4th instead of 3rd'],
-      ['6', 'Dreiklang + Sexte', 'Triad + 6th'],
+      ['6', 'Dur-Dreiklang + gr. Sexte', 'Major triad + maj. 6th'],
+      ['m6', 'Moll-Dreiklang + gr. Sexte!', 'Minor triad + maj. 6th!'],
       ['add9', 'Dreiklang + 9 (ohne 7)', 'Triad + 9 (no 7th)'],
       ['9', 'Dominantsept + 9', 'Dominant 9th']
     ];
@@ -713,15 +1055,6 @@
   }
 
   function bindLessonEvents(les, unit) {
-    const lv = $('#lesson-voicing');
-    if (lv) {
-      lv.onchange = () => {
-        P.inv = +lv.value;
-        $('#p-inv').value = String(P.inv);
-        if (S.curChord) showChord(S.curChord, false);
-      };
-    }
-
     const doneBtn = $('#mark-done-btn');
     if (doneBtn) {
       doneBtn.onclick = () => {
@@ -745,6 +1078,61 @@
       stepUnit(1);
     };
 
+    // Enharmonic pair comparison buttons in Notation lesson
+    $$('[data-enharm-midi]').forEach(btn => {
+      btn.onclick = () => {
+        const midi = +btn.dataset.enharmMidi;
+        const lbl = btn.dataset.enharmLbl;
+        $$('[data-enharm-midi]').forEach(b => b.classList.toggle('primary', b === btn));
+        // Play the exact same pitch twice so the ear hears both written notes sound identical
+        A.playNote(midi, 0.55, 0, 0.85);
+        A.playNote(midi, 0.75, 0.44, 0.85);
+        const wrap = $('#enharm-piano-wrap');
+        if (wrap) {
+          const en = S.lang === 'en';
+          const sp = {};
+          sp[midi % 12] = lbl;
+          wrap.innerHTML = `${V.pianoSVG({ lo: 60, hi: 73, activeNotes: [midi], spellMap: sp })}
+            <div class="hint" style="margin-top:4px">${en ? 'Selected pair:' : 'Gewähltes Paar:'} <b id="enharm-caption">${lbl}</b> → ${en ? '1 single key on the piano!' : 'exakt 1 Taste am Klavier!'}</div>`;
+        }
+      };
+    });
+
+    // Inline mode scale quick-play buttons in Modes lesson
+    $$('[data-play-mode-idx]').forEach(btn => {
+      btn.onclick = () => {
+        const mIdx = +btn.dataset.playModeIdx;
+        const sc = T.SCALES_MODES[mIdx];
+        if (!sc) return;
+        stopPlayer();
+        A.stopScale();
+        scaleIdxByWidget.scales_modes = mIdx;
+        const base = 60 + S.key;
+        const notes = [...sc.ints.map(x => base + x), base + 12];
+        scalePlaying = true;
+        if ($('#unit-widget')) {
+          $('#unit-widget').innerHTML = renderScaleWidgetHTML('scales_modes');
+          bindLessonEvents(les, unit);
+        }
+        const modeWrap = $('[data-scale-widget]');
+        A.playScale(
+          notes,
+          320,
+          (_, midi) => highlightScaleNote(modeWrap, midi, 0),
+          () => {
+            scalePlaying = false;
+            clearScaleHighlight(modeWrap);
+            const b = $('#scale-play-btn');
+            if (b) {
+              b.textContent = MT.t('scale_listen');
+              b.classList.remove('playing');
+              b.classList.add('primary');
+            }
+          }
+        );
+      };
+    });
+
     // Scale picker & Play/Stop
     const sp = $('#scale-picker');
     if (sp) {
@@ -760,9 +1148,11 @@
     const spBtn = $('#scale-play-btn');
     if (spBtn) {
       spBtn.onclick = () => {
+        const scWrap = spBtn.closest('[data-scale-widget]');
         if (scalePlaying) {
           A.stopScale();
           scalePlaying = false;
+          clearScaleHighlight(scWrap);
           spBtn.textContent = MT.t('scale_listen');
           spBtn.classList.remove('playing');
           spBtn.classList.add('primary');
@@ -774,15 +1164,21 @@
         spBtn.textContent = MT.t('scale_stop');
         spBtn.classList.remove('primary');
         spBtn.classList.add('playing');
-        A.playScale(notes, 340, null, () => {
-          scalePlaying = false;
-          const b = $('#scale-play-btn');
-          if (b) {
-            b.textContent = MT.t('scale_listen');
-            b.classList.remove('playing');
-            b.classList.add('primary');
+        A.playScale(
+          notes,
+          340,
+          (_, midi) => highlightScaleNote(scWrap, midi, 0),
+          () => {
+            scalePlaying = false;
+            clearScaleHighlight(scWrap);
+            const b = $('#scale-play-btn');
+            if (b) {
+              b.textContent = MT.t('scale_listen');
+              b.classList.remove('playing');
+              b.classList.add('primary');
+            }
           }
-        });
+        );
       };
     }
 
@@ -796,8 +1192,9 @@
           return;
         }
         const ex = unit.examples[idx];
-        const { chords } = T.parseProgression(ex.toks, S.key, ex.mode);
-        startExamplePlayer(chords, btnId, `ex-chips-${idx}`);
+        const exKey = exampleKey(ex);
+        const { chords } = T.parseProgression(ex.toks, exKey, ex.mode);
+        startExamplePlayer(chords, btnId, `ex-chips-${idx}`, exKey);
       };
     });
 
@@ -806,6 +1203,10 @@
         const ex = unit.examples[+btn.dataset.exOpen];
         P.toks = ex.toks;
         P.mode = ex.mode;
+        // If a sameTonic minor mode vamp (e.g. C Dorian) is opened in Practice Tool, align S.key so it keeps its tonic
+        if (ex.mode === 'min' && ex.sameTonic) {
+          setGlobalKey((S.key + 3) % 12);
+        }
         P.reps = 2;
         P.mod = 'none';
         syncPracticeControls();
@@ -824,8 +1225,11 @@
             if (i === unit.check.ans) b.classList.add('correct');
             else if (i === picked) b.classList.add('wrong');
           });
+          const expHtml = unit.check.transpose === false
+            ? formatRichText(MT.loc(unit.check.exp, S.key))
+            : T.transposeHTML(MT.loc(unit.check.exp, S.key), S.key);
           $('#mc-feedback').innerHTML = `<div class="quiz-feedback ${ok ? 'ok' : 'err'}">
-            <b>${ok ? MT.t('q_correct') : MT.t('q_wrong')}</b> ${formatRichText(MT.loc(unit.check.exp))}
+            <b>${ok ? MT.t('q_correct') : MT.t('q_wrong')}</b> ${expHtml}
           </div>`;
         };
       });
@@ -965,6 +1369,7 @@
     $('#p-mode').value = P.mode;
     $('#p-key').value = String(S.key);
     $('#p-inv').value = String(P.inv);
+    if ($('#live-voicing')) $('#live-voicing').value = String(P.inv);
     $('#p-bpm').value = String(P.bpm);
     $('#p-bpm-num').value = String(P.bpm);
     $('#p-bpm-val').textContent = String(P.bpm);
@@ -989,7 +1394,8 @@
   }
 
   function renderPracticeView(activeIdx = -1, activeBeat = -1) {
-    const { chords, invalid } = T.parseProgression(P.toks, S.key, P.mode);
+    const pKey = practiceKey();
+    const { chords, invalid } = T.parseProgression(P.toks, pKey, P.mode);
     const errEl = $('#p-error');
     if (invalid.length) {
       errEl.textContent = MT.t('parse_warn', { bad: invalid.join(', ') });
@@ -1034,11 +1440,12 @@
       box.innerHTML = chipsHTML(chords, activeIdx);
     }
 
-    const keyLbl = T.noteName(S.key) + (P.mode === 'maj' ? MT.t('key_maj_sfx') : MT.t('key_min_sfx'));
+    const keyLbl = T.noteName(pKey) + (P.mode === 'maj' ? MT.t('key_maj_sfx') : MT.t('key_min_sfx'));
     let info = `${MT.t('key')}: ${keyLbl}`;
     if (P.run && P.source === 'practice' && P.mod !== 'none' && P.rep + 1 >= P.reps) {
       const nk = peekNextKey();
-      const nkLbl = T.noteName(nk) + (P.mode === 'maj' ? MT.t('key_maj_sfx') : MT.t('key_min_sfx'));
+      const nkDisp = P.mode === 'min' ? T.relativeMinorKey(nk) : nk;
+      const nkLbl = T.noteName(nkDisp) + (P.mode === 'maj' ? MT.t('key_maj_sfx') : MT.t('key_min_sfx'));
       info += `  ${MT.t('next_round_warn')} ${nkLbl}`;
     }
     $('#p-key-info').textContent = info;
@@ -1048,8 +1455,9 @@
   function adjustChordBeats(idx, delta) {
     const rawTokens = (P.toks || '').split(/[\s,|–—]+/).filter(Boolean);
     let validIdx = 0;
+    const pKey = practiceKey();
     for (let i = 0; i < rawTokens.length; i++) {
-      const c = T.parseChord(rawTokens[i], S.key, P.mode);
+      const c = T.parseChord(rawTokens[i], pKey, P.mode);
       if (!c) continue;
       if (validIdx === idx) {
         const cur = c.beats != null ? c.beats : P.beats;
@@ -1116,7 +1524,7 @@
   function startPracticePlayer() {
     stopPlayer();
     A.stopScale();
-    const { chords } = T.parseProgression(P.toks, S.key, P.mode);
+    const { chords } = T.parseProgression(P.toks, practiceKey(), P.mode);
     if (!chords.length) return;
 
     P.run = true;
@@ -1126,8 +1534,8 @@
     P.rep = 0;
     P.round = 0;
     P.nextKey = null;
-    P.prevUpper = null;
-    P.prevBass = null;
+    P.voiced = null;
+    P.voicedSig = '';
     P.countingIn = P.countIn ? P.beats : 0;
 
     $('#p-start').textContent = MT.t('stop');
@@ -1137,7 +1545,7 @@
     tickPlayer();
   }
 
-  function startExamplePlayer(chords, btnId, chipContainerId) {
+  function startExamplePlayer(chords, btnId, chipContainerId, exKey) {
     stopPlayer();
     A.stopScale();
     if (!chords || !chords.length) return;
@@ -1146,12 +1554,13 @@
     P.source = 'example';
     P.exBtnId = btnId;
     P.exChords = chords;
+    P.exKey = exKey != null ? exKey : S.key;
     P.exChipContainerId = chipContainerId;
     P.idx = 0;
     P.beat = 0;
     P.round = 0;
-    P.prevUpper = null;
-    P.prevBass = null;
+    P.voiced = null;
+    P.voicedSig = '';
     P.countingIn = 0;
 
     const btn = document.getElementById(btnId);
@@ -1178,17 +1587,18 @@
       return;
     }
 
+    const activeKey = P.source === 'example' ? (P.exKey != null ? P.exKey : S.key) : practiceKey();
     const chords = P.source === 'example'
       ? P.exChords
-      : T.parseProgression(P.toks, S.key, P.mode).chords;
+      : T.parseProgression(P.toks, activeKey, P.mode).chords;
 
     if (!chords || !chords.length) return stopPlayer();
     if (P.idx >= chords.length) P.idx = 0;
 
     const c = chords[P.idx];
-    const beatsThisChord = P.source === 'example'
-      ? Math.min(2, P.beats)
-      : (c.beats != null ? c.beats : P.beats);
+    const beatsThisChord = c.beats != null
+      ? c.beats
+      : (P.source === 'example' ? Math.min(2, P.beats) : P.beats);
 
     if (P.source === 'practice') {
       renderBeatBar(P.beat, 0, beatsThisChord);
@@ -1197,13 +1607,12 @@
 
     // Trigger chord on beat 0
     if (P.beat === 0) {
-      if (P.idx === 0) {
-        P.prevUpper = null;
-        P.prevBass = null;
+      const sig = `${activeKey}|${P.inv}|${P.round}|${chords.map(x => x.tok).join(' ')}`;
+      if (!P.voiced || P.voicedSig !== sig) {
+        P.voiced = T.voiceProgression(chords, P.inv, P.round, { key: activeKey });
+        P.voicedSig = sig;
       }
-      const v = T.voiceChord(c, P.inv, P.prevUpper, P.round, { key: S.key, prevBass: P.prevBass });
-      P.prevUpper = v.upper;
-      P.prevBass = v.bass;
+      const v = P.voiced[P.idx] || T.voiceChord(c, P.inv, null, P.round, { key: activeKey });
 
       if (P.source === 'practice') {
         renderPracticeView(P.idx, P.beat);
@@ -1302,6 +1711,7 @@
     $$('.lang-switch button').forEach(b => {
       b.onclick = () => {
         S.lang = b.dataset.lang;
+        S.notation = S.lang === 'en' ? 'int' : 'de';
         saveState();
         applyStaticI18n();
       };
@@ -1323,6 +1733,8 @@
         A.playChordNotes(S.curChord._voicing.all, 1.7, 'arp');
       }
     };
+    $('#live-voicing').onchange = e => setVoicing(e.target.value);
+    $('#live-inst').onchange = e => setInstrument(e.target.value, true);
     $$('#label-mode-toggle button').forEach(btn => {
       btn.classList.toggle('on', btn.dataset.lmode === S.labelMode);
       btn.onclick = () => {
@@ -1364,11 +1776,11 @@
     };
     $('#p-mode').onchange = e => { P.mode = e.target.value; renderPracticeView(); };
     $('#p-key').onchange = e => setGlobalKey(+e.target.value);
-    $('#p-inv').onchange = e => { P.inv = +e.target.value; if (S.curChord) showChord(S.curChord, false); };
+    $('#p-inv').onchange = e => setVoicing(e.target.value);
     $('#p-editor').oninput = e => { P.toks = e.target.value; renderPracticeView(); };
 
     const syncBpm = val => {
-      P.bpm = Math.max(40, Math.min(220, +val || 100));
+      P.bpm = Math.max(40, Math.min(220, +val || 84));
       $('#p-bpm').value = String(P.bpm);
       $('#p-bpm-num').value = String(P.bpm);
       $('#p-bpm-val').textContent = String(P.bpm);
@@ -1408,6 +1820,7 @@
     };
 
     // Audio & MIDI controls
+    $('#audio-inst').onchange = e => setInstrument(e.target.value, true);
     $('#audio-style').value = A.settings.style;
     $('#audio-style').onchange = e => { A.setStyle(e.target.value); saveState(); };
     $('#audio-vol').value = String(Math.round(A.settings.volume * 100));
@@ -1456,10 +1869,28 @@
         setGlobalKey(+el.dataset.ck);
         return;
       }
-      // Interactive piano key click (Live View or Scale Widget)
+      // Interactive staff note click (Scale Tool or Lesson Scale Widget) -> play & highlight note + piano key + table
+      if ((el = e.target.closest('.staff-note'))) {
+        const midi = +el.dataset.midi;
+        A.playNote(midi, 0.8, 0, 0.88);
+        const scWrap = el.closest('#scale-tool-root, [data-scale-widget]');
+        if (scWrap) highlightScaleNote(scWrap, midi, 650);
+        return;
+      }
+      // Interactive scale degree / note table cell click -> play & highlight note + piano key + table
+      if ((el = e.target.closest('.sc-tbl td[data-sc-midi]'))) {
+        const midi = +el.dataset.scMidi;
+        A.playNote(midi, 0.8, 0, 0.88);
+        const scWrap = el.closest('#scale-tool-root, [data-scale-widget]');
+        if (scWrap) highlightScaleNote(scWrap, midi, 650);
+        return;
+      }
+      // Interactive piano key click (Live View, Scale Tool, or Scale Widget)
       if ((el = e.target.closest('.piano-key'))) {
         const midi = +el.dataset.midi;
         A.playNote(midi, 0.8, 0, 0.85);
+        const scWrap = el.closest('#scale-tool-root, [data-scale-widget]');
+        if (scWrap) highlightScaleNote(scWrap, midi, 650);
         return;
       }
       // Interval table play button -> play melodic then harmonic interval!

@@ -34,6 +34,8 @@
     '13': [0, 4, 7, 10, 14, 21],
     '7b9': [0, 4, 7, 10, 13],
     '7s9': [0, 4, 7, 10, 15],
+    q4: [0, 5, 10],
+    m11: [0, 5, 10, 15, 19],
     it6: [0, 4, 10],
     fr6: [0, 4, 6, 10],
     ger6: [0, 4, 7, 10]
@@ -65,6 +67,8 @@
     '13': '13',
     '7b9': '7♭9',
     '7s9': '7♯9',
+    q4: '(4)',
+    m11: 'm11',
     it6: 'it+6',
     fr6: 'fr+6',
     ger6: 'dt+6'
@@ -96,6 +100,8 @@
     '13': [0, 2, 4, 6, 1, 5],
     '7b9': [0, 2, 4, 6, 1],
     '7s9': [0, 2, 4, 6, 1], // #9 = raised 2nd letter (e.g. E7#9 -> F## or enharmonic G; we spell cleanly below)
+    q4: [0, 3, 6],
+    m11: [0, 3, 6, 2, 4],
     it6: [0, 2, 5],
     fr6: [0, 2, 3, 5],
     ger6: [0, 2, 4, 5] // 5th step = augmented 6th (e.g. Ab C Eb F#)
@@ -106,12 +112,20 @@
     '9': [4, 7, 10, 14],
     maj9: [4, 7, 11, 14],
     m9: [3, 7, 10, 14],
+    m11: [5, 10, 15, 19], // Exact Bill Evans "So What" quartal voicing: 3 perfect 4ths + major 3rd!
     '13': [4, 10, 14, 21],
     '7b9': [4, 7, 10, 13],
     '7s9': [4, 10, 15],
     add9: [0, 4, 7, 14],
     madd9: [0, 3, 7, 14]
   };
+
+  // Three genuine jazz / Neo-Soul RH voicings for m11 (used across Grundstellung / 1. / 2. Lage)
+  const M11_VOICINGS = [
+    [5, 10, 15, 19], // k=0: Bill Evans "So What" (3 fourths + M3, 5th on top)
+    [3, 7, 10, 17],  // k=1: Neo-Soul rootless m11 (warm Fmaj7-like grip, 11th on top)
+    [7, 12, 17, 22]  // k=2: McCoy Tyner pure stacked 4ths (5–1–11–♭7, ♭7 on top)
+  ];
 
   const TUN = {
     Gitarre: [40, 45, 50, 55, 59, 64], // E2 A2 D3 G3 B3 E4
@@ -173,6 +187,7 @@
       .replace('7#9', '7♯9')
       .replace('7#5', '7♯5')
       .replace('+7', '+7')
+      .replace(/q4$/, '(4)')
       .replace('it6', 'it+6')
       .replace('fr6', 'fr+6')
       .replace('ger6', MT.state.lang === 'en' ? 'ger+6' : 'dt+6');
@@ -278,8 +293,10 @@
       q = '7s5';
     } else if (rem === 'maj7#5' || rem === 'maj7♯5') {
       q = 'maj7s5';
-    } else if (['sus2', 'sus4', 'maj9', '13', 'it6', 'fr6', 'ger6'].includes(rem)) {
+    } else if (['sus2', 'sus4', 'maj9', '13', 'q4', 'it6', 'fr6', 'ger6'].includes(rem)) {
       q = rem;
+    } else if (rem === '11') {
+      q = 'm11';
     } else if (['add9', '6', '9'].includes(rem)) {
       q = main.u ? rem : 'm' + rem;
     } else {
@@ -347,7 +364,7 @@
       else if (s === 2) { label = '2'; role = 'ext'; }
       else if (s === 3) { label = '♭3'; role = 'third'; }
       else if (s === 4) { label = '3'; role = 'third'; }
-      else if (s === 5) { label = '4'; role = 'ext'; }
+      else if (s === 5) { label = c.q === 'm11' ? '11' : '4'; role = 'ext'; }
       else if (s === 6) {
         if (c.q === 'fr6') { label = '♯4'; role = 'ext'; }
         else { label = '♭5'; role = 'fifth'; }
@@ -365,7 +382,11 @@
       else if (s === 11) { label = '7'; role = 'seventh'; }
       else if (s === 13) { label = '♭9'; role = 'ext'; }
       else if (s === 14) { label = '9'; role = 'ext'; }
-      else if (s === 15) { label = '♯9'; role = 'ext'; }
+      else if (s === 15) {
+        if (c.q === 'm11') { label = '♭3'; role = 'third'; }
+        else { label = '♯9'; role = 'ext'; }
+      }
+      else if (s === 19) { label = '5'; role = 'fifth'; }
       else if (s === 21) { label = '13'; role = 'ext'; }
       map[(c.root + s) % 12] = { label, role, color: ROLE_COLOR[role] };
     });
@@ -390,75 +411,9 @@
     return cost - common * 0.4 + topMove * 0.25;
   }
 
-  // Compute optimal voice-leading + close, smooth bass (never >= 2 octaves apart, no surprise jumps!)
-  function voiceChord(c, inv, prev, roundNum, opts) {
-    const key = opts && opts.key != null ? opts.key : (MT.state ? MT.state.key : 0);
-    const prevBass = opts && opts.prevBass != null ? opts.prevBass : null;
-
-    const ints = RH_EXT[c.q] || Q[c.q] || Q[''];
-    const tonicBase = key >= 7 ? (48 + key) : (60 + key);
-    const rootMidi = tonicBase + ((c.root - key + 12) % 12);
-    const raw = ints.map(i => rootMidi + i);
-    const L = raw.length;
-
-    function rot(k) {
-      const a = raw.slice();
-      for (let i = 0; i < k; i++) a.push(a.shift() + 12);
-      return a;
-    }
-
+  // Shared bass-note placement: close to upper[0] (4..18 st below) and smooth from prevBass
+  function pickBassNote(c, upper, inv, rootMidi, prevBass) {
     const fi = c.fi;
-    let upper;
-
-    if (inv < 8) {
-      // Fixed voicing (Grundstellung or explicit inversion): clean, predictable, zero surprise jumps!
-      const k = (fi != null ? fi : inv) % L;
-      upper = rot(k);
-    } else {
-      // Voice-leading modes:
-      // 10 = start root, 11 = start 1st inv, 12 = start 2nd inv, 8 = cycle (0 -> 1 -> 2), 9 = legacy alias for 10
-      const startInv = inv === 8 ? (roundNum || 0) % 3 : (inv >= 10 ? inv - 10 : 0);
-
-      if (!prev) {
-        // First chord of progression (or single click): place exact requested starting inversion cleanly in center
-        const k = (fi != null ? fi : startInv) % L;
-        let best = rot(k);
-        let bestScore = 1e9;
-        for (const shift of [-24, -12, 0, 12]) {
-          const v = rot(k).map(x => x + shift);
-          const center = (v[0] + v[v.length - 1]) / 2;
-          if (v[0] < 54 || v[v.length - 1] > 81) continue;
-          const sc = Math.abs(center - 66);
-          if (sc < bestScore) { bestScore = sc; best = v; }
-        }
-        upper = best;
-      } else {
-        // Subsequent chords: true 1-to-1 minimal voice leading with soft center gravity (no hard-wall octave flips!)
-        const ks = fi != null ? [fi % L] : Array.from({ length: L }, (_, i) => i);
-        let best = rot(fi != null ? fi % L : 0);
-        let bestScore = 1e9;
-
-        for (const k of ks) {
-          for (const shift of [-24, -12, 0, 12]) {
-            const v = rot(k).map(x => x + shift);
-            if (v[0] < 50 || v[v.length - 1] > 84) continue;
-            const center = (v[0] + v[v.length - 1]) / 2;
-            const vl = voiceLeadCost(prev, v);
-            // Soft penalty only if drifting outside comfortable keyboard range (57..76)
-            const softRange = (v[0] < 55 ? (55 - v[0]) * 0.6 : 0) + (v[v.length - 1] > 78 ? (v[v.length - 1] - 78) * 0.6 : 0);
-            const gravity = Math.abs(center - 65) * 0.06;
-            const score = vl + softRange + gravity;
-            if (score < bestScore) {
-              bestScore = score;
-              best = v;
-            }
-          }
-        }
-        upper = best;
-      }
-    }
-
-    // Bass pitch class: pedal/upper-structure (@I) > explicit inversion (^1/^2/^3) > fixed inversion (1..3) > root
     let bassPC = c.root;
     if (c.customBassPC != null) {
       bassPC = c.customBassPC;
@@ -470,47 +425,289 @@
       bassPC = (c.root + full[inv % full.length]) % 12;
     }
 
-    let bass;
     if (inv < 8) {
-      bass = (RH_EXT[c.q] && fi == null && inv === 0 && c.customBassPC == null)
-        ? (rootMidi - 12)
-        : (upper[0] - 12);
+      if (prevBass != null && ((prevBass % 12) + 12) % 12 === bassPC && prevBass >= 36 && prevBass <= upper[0] - 3) {
+        return prevBass;
+      }
+      let bass = (c.customBassPC != null)
+        ? 48
+        : (RH_EXT[c.q] && fi == null && inv === 0)
+          ? (rootMidi - 12)
+          : (upper[0] - 12);
       while (((bass % 12) + 12) % 12 !== bassPC) bass--;
-      if (upper[0] - bass > 19 && bass + 12 <= upper[0] - 4) bass += 12;
+      if (bass < 38) bass += 12;
+      if (c.customBassPC != null && bass > 53 && bass - 12 >= 36) bass -= 12;
+      if (upper[0] - bass > 24 && bass + 12 <= upper[0] - 4 && bass + 12 <= 55) bass += 12;
       if (upper[0] - bass < 4) bass -= 12;
-    } else {
-      // Keep bass strictly 4..19 semitones below upper[0] (NEVER >= 2 octaves apart!)
-      const minB = Math.max(38, upper[0] - 19);
-      const maxB = Math.min(57, upper[0] - 4);
-      const target = prevBass != null ? prevBass : (upper[0] - 12);
+      return bass;
+    }
 
-      // Hold exact pedal bass note if unchanged and within range
-      if (c.customBassPC != null && prevBass != null && (prevBass % 12) === bassPC && prevBass >= minB && prevBass <= maxB) {
-        bass = prevBass;
-      } else {
-        let bestB = null;
-        let bestDist = 1e9;
-        for (let oct = 2; oct <= 4; oct++) {
-          const cand = 12 * (oct + 1) + bassPC;
-          if (cand < minB || cand > maxB) continue;
-          const d = Math.abs(cand - target);
-          if (d < bestDist || (d === bestDist && Math.abs(cand - (upper[0] - 12)) < Math.abs(bestB - (upper[0] - 12)))) {
-            bestDist = d;
-            bestB = cand;
+    // Lock pedal / repeated bass notes cleanly on the exact same pitch (never jump octaves on an organ pedal!)
+    if (prevBass != null && ((prevBass % 12) + 12) % 12 === bassPC && prevBass >= 36 && prevBass <= upper[0] - 3) {
+      return prevBass;
+    }
+
+    const minB = Math.max(36, upper[0] - 28);
+    const maxB = Math.min(prevBass != null ? 57 : 54, upper[0] - 3);
+    const target = prevBass != null ? prevBass : Math.min(50, upper[0] - 12);
+
+    let bestB = null;
+    let bestDist = 1e9;
+    for (let oct = 2; oct <= 4; oct++) {
+      const cand = 12 * (oct + 1) + bassPC;
+      if (cand < minB || cand > maxB) continue;
+      const d = Math.abs(cand - target);
+      if (d < bestDist || (d === bestDist && Math.abs(cand - 48) < Math.abs(bestB - 48))) {
+        bestDist = d;
+        bestB = cand;
+      }
+    }
+    if (bestB == null) {
+      for (let oct = 2; oct <= 4; oct++) {
+        const cand = 12 * (oct + 1) + bassPC;
+        if (cand > upper[0] - 3 || cand < 36) continue;
+        const d = Math.abs(cand - target);
+        if (d < bestDist) { bestDist = d; bestB = cand; }
+      }
+    }
+    return bestB != null ? bestB : (upper[0] - 12);
+  }
+
+  // Generate deduplicated playable RH voicings for chord c within MIDI [53..86]
+  function getUpperCandidates(c, key, ksOverride) {
+    const ints = RH_EXT[c.q] || Q[c.q] || Q[''];
+    const tonicBase = key >= 7 ? (48 + key) : (60 + key);
+    const rootMidi = tonicBase + ((c.root - key + 12) % 12);
+
+    if (c.q === 'm11') {
+      const ks = ksOverride ? ksOverride.map(k => k % M11_VOICINGS.length) : [0, 1, 2];
+      const seen = new Set();
+      const cands = [];
+      for (const k of ks) {
+        const baseV = M11_VOICINGS[k].map(i => rootMidi + i);
+        for (const shift of [-24, -12, 0, 12]) {
+          const v = baseV.map(x => x + shift);
+          if (v[0] < 53 || v[v.length - 1] > 86) continue;
+          const sig = v.join(',');
+          if (!seen.has(sig)) {
+            seen.add(sig);
+            cands.push(v);
           }
         }
-        if (bestB == null) {
-          for (let oct = 2; oct <= 4; oct++) {
-            const cand = 12 * (oct + 1) + bassPC;
-            if (cand > upper[0] - 3 || cand < 36) continue;
-            const d = Math.abs(cand - target);
-            if (d < bestDist) { bestDist = d; bestB = cand; }
+      }
+      return cands.length ? cands : [M11_VOICINGS[0].map(i => rootMidi + i - 12)];
+    }
+
+    const raw = ints.map(i => rootMidi + i);
+    const L = raw.length;
+    const rot = k => {
+      const a = raw.slice();
+      for (let i = 0; i < k; i++) a.push(a.shift() + 12);
+      return a;
+    };
+    const ks = ksOverride || Array.from({ length: L }, (_, i) => i);
+    const seen = new Set();
+    const cands = [];
+    for (const k of ks) {
+      for (const shift of [-24, -12, 0, 12]) {
+        const v = rot(k).map(x => x + shift);
+        if (v[0] < 53 || v[v.length - 1] > 86) continue;
+        const sig = v.join(',');
+        if (!seen.has(sig)) {
+          seen.add(sig);
+          cands.push(v);
+        }
+      }
+    }
+    return cands.length ? cands : [rot(0)];
+  }
+
+  // Globally optimal (Viterbi DP) voice leading across an entire progression:
+  // eliminates step-by-step register ratcheting (e.g. vi -> ii -> V -> I drifting up an inversion)
+  // while keeping every transition minimal and landing cleanly back in the starting register!
+  function voiceProgression(chords, inv, roundNum, opts) {
+    if (!chords || !chords.length) return [];
+    const key = opts && opts.key != null ? opts.key : (MT.state ? MT.state.key : 0);
+
+    // Fixed voicing modes (Grundstellung / 1. / 2. Umkehrung) keep independent RH, while locking repeated/pedal bass smoothly
+    if (inv < 8) {
+      let prevB = null;
+      return chords.map(c => {
+        const v = voiceChord(c, inv, null, roundNum, { key, prevBass: prevB });
+        prevB = v.bass;
+        return v;
+      });
+    }
+
+    const startInv = inv === 8 ? (roundNum || 0) % 3 : (inv >= 10 ? inv - 10 : 0);
+    const c0 = chords[0];
+    const L0 = (RH_EXT[c0.q] || Q[c0.q] || Q['']).length;
+    const k0 = (c0.fi != null ? c0.fi : startInv) % L0;
+    const targetCtr = startInv === 0 ? 64 : startInv === 1 ? 68 : 71;
+    const cands0 = getUpperCandidates(c0, key, [k0]);
+
+    let v0 = cands0[0];
+    let best0 = 1e9;
+    for (const v of cands0) {
+      if (v[0] < 55 || v[v.length - 1] > 82) continue;
+      const ctr = (v[0] + v[v.length - 1]) / 2;
+      const sc = Math.abs(ctr - targetCtr);
+      if (sc < best0) { best0 = sc; v0 = v; }
+    }
+
+    const anchor = (v0[0] + v0[v0.length - 1]) / 2;
+    const n = chords.length;
+    const layers = [[v0]];
+
+    for (let i = 1; i < n; i++) {
+      const c = chords[i];
+      const prevC = chords[i - 1];
+      const L = (RH_EXT[c.q] || Q[c.q] || Q['']).length;
+      // Preserve explicit RH inversions only in pure same-chord inversion demos (I -> I^1 -> I^2 -> I)
+      const sameChordInvDemo = c.fi != null && prevC.root === c.root && prevC.q === c.q;
+      const returnFromInvDemo = c.fi == null && prevC.fi != null && prevC.root === c.root && prevC.q === c.q;
+      let ks = null;
+      if (sameChordInvDemo) ks = [c.fi % L];
+      else if (returnFromInvDemo) ks = [startInv % L];
+      layers.push(getUpperCandidates(c, key, ks));
+    }
+
+    const dp = layers.map(l => new Array(l.length).fill(1e9));
+    const back = layers.map(l => new Array(l.length).fill(0));
+    dp[0][0] = 0;
+
+    const firstC = chords[0];
+    const lastC = chords[n - 1];
+    const sameStartEnd = n > 1 && firstC.root === lastC.root && firstC.q === lastC.q && firstC.fi === lastC.fi;
+    const isPureInvDemo = n > 2 && chords.every(c => c.root === firstC.root && c.q === firstC.q);
+
+    for (let i = 1; i < n; i++) {
+      for (let j = 0; j < layers[i].length; j++) {
+        const cand = layers[i][j];
+        const ctr = (cand[0] + cand[cand.length - 1]) / 2;
+        const drift = Math.abs(ctr - anchor);
+        let nodeCost = isPureInvDemo ? 0 : (drift * 0.4 + Math.pow(Math.max(0, drift - 2.0), 2) * 0.45);
+        if (i === n - 1 && !isPureInvDemo) {
+          if (sameStartEnd) {
+            // Cadential home closure: return cleanly to the exact starting register & inversion
+            nodeCost += Math.abs(cand[0] - v0[0]) * 3.0 + Math.abs(ctr - anchor) * 2.0;
+          } else {
+            // Looping cadence: finish in the voicing that connects smoothly back to v0 on repeat
+            nodeCost += voiceLeadCost(cand, v0) * 0.55;
           }
         }
-        bass = bestB != null ? bestB : (upper[0] - 12);
+        for (let p = 0; p < layers[i - 1].length; p++) {
+          const total = dp[i - 1][p] + voiceLeadCost(layers[i - 1][p], cand) + nodeCost;
+          if (total < dp[i][j]) {
+            dp[i][j] = total;
+            back[i][j] = p;
+          }
+        }
       }
     }
 
+    let bestIdx = 0;
+    for (let j = 1; j < dp[n - 1].length; j++) {
+      if (dp[n - 1][j] < dp[n - 1][bestIdx]) bestIdx = j;
+    }
+    const uppers = new Array(n);
+    for (let i = n - 1; i >= 0; i--) {
+      uppers[i] = layers[i][bestIdx];
+      bestIdx = back[i][bestIdx];
+    }
+
+    // Build smooth bass line along the globally optimal RH path
+    const tonicBase = key >= 7 ? (48 + key) : (60 + key);
+    let prevBass = null;
+    return chords.map((c, i) => {
+      const rootMidi = tonicBase + ((c.root - key + 12) % 12);
+      const upper = uppers[i];
+      const bass = pickBassNote(c, upper, inv, rootMidi, prevBass);
+      prevBass = bass;
+      return { bass, upper, all: [bass, ...upper] };
+    });
+  }
+
+  // Compute optimal voice-leading for a single chord (used for individual clicks & fixed modes)
+  function voiceChord(c, inv, prev, roundNum, opts) {
+    const key = opts && opts.key != null ? opts.key : (MT.state ? MT.state.key : 0);
+    const prevBass = opts && opts.prevBass != null ? opts.prevBass : null;
+    const anchorCenter = opts && opts.anchorCenter != null ? opts.anchorCenter : null;
+    const prevChord = opts && opts.prevChord ? opts.prevChord : null;
+
+    const ints = RH_EXT[c.q] || Q[c.q] || Q[''];
+    const tonicBase = key >= 7 ? (48 + key) : (60 + key);
+    let rootMidi = tonicBase + ((c.root - key + 12) % 12);
+    // Keep upper-structure / slash-pedal triads close to the tonic register in root position (e.g. bVII/I near I, not +10 st up!)
+    if (inv < 8 && c.customBassPC != null && rootMidi - tonicBase > 7) {
+      rootMidi -= 12;
+    }
+    const raw = ints.map(i => rootMidi + i);
+    const L = raw.length;
+
+    function rot(k) {
+      if (c.q === 'm11') return M11_VOICINGS[k % M11_VOICINGS.length].map(i => rootMidi + i);
+      const a = raw.slice();
+      for (let i = 0; i < k; i++) a.push(a.shift() + 12);
+      return a;
+    }
+
+    const fi = c.fi;
+    let upper;
+
+    if (inv < 8) {
+      if (c.q === 'm11') {
+        const k = (fi != null ? fi : inv) % M11_VOICINGS.length;
+        upper = M11_VOICINGS[k].map(i => rootMidi + i);
+        if (upper[upper.length - 1] > 79) upper = upper.map(x => x - 12);
+      } else {
+        const k = (fi != null ? fi : inv) % L;
+        upper = rot(k);
+      }
+    } else {
+      const startInv = inv === 8 ? (roundNum || 0) % 3 : (inv >= 10 ? inv - 10 : 0);
+
+      if (!prev) {
+        const k = (fi != null ? fi : startInv) % L;
+        const targetCtr = startInv === 0 ? 64 : startInv === 1 ? 68 : 71;
+        let best = rot(k);
+        let bestScore = 1e9;
+        for (const shift of [-24, -12, 0, 12]) {
+          const v = rot(k).map(x => x + shift);
+          const center = (v[0] + v[v.length - 1]) / 2;
+          if (v[0] < 55 || v[v.length - 1] > 82) continue;
+          const sc = Math.abs(center - targetCtr);
+          if (sc < bestScore) { bestScore = sc; best = v; }
+        }
+        upper = best;
+      } else {
+        const sameChordInvDemo = fi != null && prevChord && prevChord.root === c.root && prevChord.q === c.q;
+        const ks = sameChordInvDemo ? [fi % L] : Array.from({ length: L }, (_, i) => i);
+        const targetAnchor = anchorCenter != null ? anchorCenter : ((prev[0] + prev[prev.length - 1]) / 2);
+
+        let best = rot(0);
+        let bestScore = 1e9;
+
+        for (const k of ks) {
+          for (const shift of [-24, -12, 0, 12]) {
+            const v = rot(k).map(x => x + shift);
+            if (v[0] < 53 || v[v.length - 1] > 86) continue;
+            const center = (v[0] + v[v.length - 1]) / 2;
+            const vl = voiceLeadCost(prev, v);
+            const drift = Math.abs(center - targetAnchor);
+            const anchorPull = drift * 0.4 + Math.pow(Math.max(0, drift - 2.0), 2) * 0.45;
+            const score = vl + anchorPull;
+            if (score < bestScore) {
+              bestScore = score;
+              best = v;
+            }
+          }
+        }
+        upper = best;
+      }
+    }
+
+    const bass = pickBassNote(c, upper, inv, rootMidi, prevBass);
     return {
       bass,
       upper,
@@ -637,10 +834,11 @@
     return (gripCache[cacheKey] = allCandidates.slice(0, 5));
   }
 
-  // Smart scale degree labels (fixes Persian & Locrian using ♭5 instead of duplicate ♯4!)
+  // Smart scale degree labels (handles ♭5 for Blues/Locrian/Persian/Diminished, ♯4 for Lydian, etc.)
   function scaleDegreeLabels(ints) {
     const hasFifth = ints.includes(7);
     const hasFourth = ints.includes(5);
+    const isMinorThirdOnly = ints.includes(3) && !ints.includes(4);
     return ints.map(x => {
       if (x === 0) return '1';
       if (x === 1) return '♭2';
@@ -648,13 +846,26 @@
       if (x === 3) return ints.includes(4) && !ints.includes(2) ? '♯2' : '♭3';
       if (x === 4) return '3';
       if (x === 5) return '4';
-      if (x === 6) return (hasFourth && !hasFifth) ? '♭5' : '♯4';
+      if (x === 6) return ((hasFourth && !hasFifth) || isMinorThirdOnly) ? '♭5' : '♯4';
       if (x === 7) return '5';
       if (x === 8) return (!hasFifth && !ints.includes(6)) ? '♯5' : '♭6';
       if (x === 9) return '6';
       if (x === 10) return '♭7';
       if (x === 11) return '7';
       return String(x);
+    });
+  }
+
+  // Classical enharmonic note spelling for ANY scale (5-, 6-, 7-, or 8-note!) in any of the 12 keys
+  function spellScale(ints, key) {
+    if (ints.length === 7) {
+      return ints.map((x, i) => spellInKey(key, x, i));
+    }
+    const labels = scaleDegreeLabels(ints);
+    return ints.map((x, i) => {
+      const num = parseInt(labels[i].replace(/[^1-7]/g, ''), 10);
+      const stepIdx = isNaN(num) ? (i % 7) : (num - 1);
+      return spellInKey(key, x, stepIdx);
     });
   }
 
@@ -760,12 +971,23 @@
     return `<div class="hint" style="margin-top:6px">${MT.t('rel_maj_prefix')}: <b>${relName}${majSfx}</b> · ${MT.t('rel_maj_degrees')}: ${degs.join(' – ')}</div>`;
   }
 
+  function relativeMinorKey(majKey) {
+    return ((majKey + 9) % 12 + 12) % 12;
+  }
+
+  function keyPairLabel(majKey) {
+    const k = ((majKey % 12) + 12) % 12;
+    const maj = fmtNote(N_FLAT[k]);
+    const min = fmtNote(spellInKey(k, 9, 5));
+    return `${maj} / ${min}m`;
+  }
+
   // Scale catalog (all original scales preserved!)
   const SCALES_BASIC = [
     { name: { de: 'Dur (Ionisch)', en: 'Major (Ionian)' }, ints: [0, 2, 4, 5, 7, 9, 11] },
-    { name: { de: 'Natürlich Moll', en: 'Natural Minor' }, ints: [0, 2, 3, 5, 7, 8, 10] },
-    { name: { de: 'Harmonisch Moll', en: 'Harmonic Minor' }, ints: [0, 2, 3, 5, 7, 8, 11] },
-    { name: { de: 'Melodisch Moll ↑', en: 'Melodic Minor ↑' }, ints: [0, 2, 3, 5, 7, 9, 11] }
+    { name: { de: 'Natürlich Moll', en: 'Natural Minor' }, ints: [0, 2, 3, 5, 7, 8, 10], isMin: true },
+    { name: { de: 'Harmonisch Moll', en: 'Harmonic Minor' }, ints: [0, 2, 3, 5, 7, 8, 11], isMin: true },
+    { name: { de: 'Melodisch Moll ↑', en: 'Melodic Minor ↑' }, ints: [0, 2, 3, 5, 7, 9, 11], descInts: [0, 2, 3, 5, 7, 8, 10], isMin: true }
   ];
 
   const SCALES_MODES = [
@@ -823,8 +1045,9 @@
     Q, SF, QS, TUN,
     SCALES_BASIC, SCALES_MODES, SCALES_WORLD,
     fmtNote, noteName, rawNoteName, spellInKey, fmtToken,
-    spellChord, chordDegreeMap, parseChord, parseProgression, voiceChord,
-    findGrips, gripPosLabel, scaleDegreeLabels,
-    transposeText, transposeHTML, harmonizeScale, midiToName, relativeMajorHint
+    spellChord, chordDegreeMap, parseChord, parseProgression, voiceChord, voiceProgression,
+    findGrips, gripPosLabel, scaleDegreeLabels, spellScale,
+    transposeText, transposeHTML, harmonizeScale, midiToName, relativeMajorHint,
+    relativeMinorKey, keyPairLabel
   };
 })();
